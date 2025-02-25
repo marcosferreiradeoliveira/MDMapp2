@@ -8,15 +8,23 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Carregar o .env antes de iniciar o Firebase
+
   await dotenv.load(fileName: "assets/.env");
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print("🔥 Firebase já inicializado ou erro: $e");
+  }
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark));
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
+
   runApp(EasyLocalization(
     supportedLocales: [Locale('en'), Locale('es'), Locale('ar')],
     path: 'assets/translations',

@@ -36,7 +36,7 @@ class DefaultFirebaseOptions {
   );
 
   static FirebaseOptions ios = FirebaseOptions(
-    apiKey: dotenv.env['API_KEY_IOS'] ?? '',
+    apiKey: dotenv.env['API_KEY_IOS'] ?? '', // 🔥 Corrigido!
     appId: dotenv.env['APP_ID_IOS'] ?? '',
     messagingSenderId: dotenv.env['MESSAGING_SENDER_ID'] ?? '',
     projectId: dotenv.env['PROJECT_ID'] ?? '',
