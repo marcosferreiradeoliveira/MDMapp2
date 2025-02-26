@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:travel_hour/blocs/notification_bloc.dart';
 import 'package:travel_hour/pages/blogs.dart';
-import 'package:travel_hour/pages/bookmark.dart';
+// import 'package:travel_hour/pages/bookmark.dart';
 import 'package:travel_hour/pages/explore.dart';
-import 'package:travel_hour/pages/profile.dart';
+// import 'package:travel_hour/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/pages/states.dart';
 import 'package:travel_hour/services/app_service.dart';
@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
     Feather.home,
     Feather.grid,
     Feather.list,
-    Feather.bookmark,
-    Feather.user
+    // Feather.bookmark,
+    // Feather.user
   ];
 
   void onTabTapped(int index) {
@@ -117,10 +117,10 @@ class _HomePageState extends State<HomePage> {
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             Explore(),
-            StatesPage(),
-            BlogPage(),
-            BookmarkPage(),
-            ProfilePage(),
+            // StatesPage(),
+            // BlogPage(),
+            // BookmarkPage(),
+            // ProfilePage(),
           ],
         ),
       ),

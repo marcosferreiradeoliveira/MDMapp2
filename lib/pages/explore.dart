@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/blocs/featured_bloc.dart';
 import 'package:travel_hour/blocs/popular_places_bloc.dart';
 import 'package:travel_hour/blocs/recent_places_bloc.dart';
-import 'package:travel_hour/blocs/recommanded_places_bloc.dart';
-import 'package:travel_hour/blocs/sign_in_bloc.dart';
+// import 'package:travel_hour/blocs/recommanded_places_bloc.dart';
+// import 'package:travel_hour/blocs/sign_in_bloc.dart';
 import 'package:travel_hour/blocs/sp_state_one.dart';
 import 'package:travel_hour/blocs/sp_state_two.dart';
 import 'package:travel_hour/config/config.dart';
-import 'package:travel_hour/widgets/featured_places.dart';
-import 'package:travel_hour/widgets/popular_places.dart';
+// import 'package:travel_hour/widgets/popular_places.dart';
 import 'package:travel_hour/widgets/recent_places.dart';
-import 'package:travel_hour/widgets/recommended_places.dart';
+// import 'package:travel_hour/widgets/recommended_places.dart';
 import 'package:travel_hour/widgets/special_state1.dart';
 import 'package:travel_hour/widgets/special_state2.dart';
 
@@ -30,24 +28,19 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
 
   Future reloadData() async {
     Future.delayed(Duration(milliseconds: 0)).then((_) async {
-      await context
-          .read<FeaturedBloc>()
-          .getData()
-          .then((value) => context.read<PopularPlacesBloc>().getData())
-          .then((value) => context.read<RecentPlacesBloc>().getData())
-          .then((value) => context.read<SpecialStateOneBloc>().getData())
-          .then((value) => context.read<SpecialStateTwoBloc>().getData())
-          .then((value) => context.read<RecommandedPlacesBloc>().getData());
+      await context.read<RecentPlacesBloc>().getData();
+      // .then((value) => context.read<SpecialStateOneBloc>().getData())
+      // .then((value) => context.read<SpecialStateTwoBloc>().getData());
+      // .then((value) => context.read<RecommandedPlacesBloc>().getData());
     });
   }
 
   Future _onRefresh() async {
-    context.read<FeaturedBloc>().onRefresh();
-    context.read<PopularPlacesBloc>().onRefresh(mounted);
+    // context.read<PopularPlacesBloc>().onRefresh(mounted);
     context.read<RecentPlacesBloc>().onRefresh(mounted);
-    context.read<SpecialStateOneBloc>().onRefresh(mounted);
-    context.read<SpecialStateTwoBloc>().onRefresh(mounted);
-    context.read<RecommandedPlacesBloc>().onRefresh(mounted);
+    // context.read<SpecialStateOneBloc>().onRefresh(mounted);
+    // context.read<SpecialStateTwoBloc>().onRefresh(mounted);
+    // context.read<RecommandedPlacesBloc>().onRefresh(mounted);
   }
 
   @override
@@ -62,12 +55,12 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
               child: Column(
                 children: <Widget>[
                   Header(),
-                  Featured(),
-                  PopularPlaces(),
+                  // Featured(),
+                  // PopularPlaces(),
                   RecentPlaces(),
-                  SpecialStateOne(),
-                  SpecialStateTwo(),
-                  RecommendedPlaces()
+                  // SpecialStateOne(),
+                  // SpecialStateTwo(),
+                  // RecommendedPlaces()
                 ],
               ),
             ),
@@ -84,7 +77,7 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SignInBloc sb = Provider.of<SignInBloc>(context);
+    // final SignInBloc sb = Provider.of<SignInBloc>(context);
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 20, bottom: 20),
       child: Column(

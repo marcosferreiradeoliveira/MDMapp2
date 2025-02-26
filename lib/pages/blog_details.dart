@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:share/share.dart';
-import 'package:travel_hour/blocs/bookmark_bloc.dart';
+// import 'package:travel_hour/blocs/bookmark_bloc.dart';
 import 'package:travel_hour/blocs/sign_in_bloc.dart';
 import 'package:travel_hour/models/blog.dart';
 import 'package:travel_hour/pages/comments.dart';
@@ -31,46 +31,45 @@ class BlogDetails extends StatefulWidget {
 }
 
 class _BlogDetailsState extends State<BlogDetails> {
-
-  
   final String collectionName = 'blogs';
 
-  handleLoveClick() {
-    bool _guestUser = context.read<SignInBloc>().guestUser;
+  // handleLoveClick() {
+  //   bool _guestUser = context.read<SignInBloc>().guestUser;
 
-    if (_guestUser == true) {
-      openSignInDialog(context);
-    } else {
-      context
-          .read<BookmarkBloc>()
-          .onLoveIconClick(collectionName, widget.blogData!.timestamp);
-    }
-  }
+  //   if (_guestUser == true) {
+  //     openSignInDialog(context);
+  //   } else {
+  //     context
+  //         .read<BookmarkBloc>()
+  //         .onLoveIconClick(collectionName, widget.blogData!.timestamp);
+  //   }
+  // }
 
-  handleBookmarkClick() {
-    bool _guestUser = context.read<SignInBloc>().guestUser;
+  // handleBookmarkClick() {
+  //   bool _guestUser = context.read<SignInBloc>().guestUser;
 
-    if (_guestUser == true) {
-      openSignInDialog(context);
-    } else {
-      context
-          .read<BookmarkBloc>()
-          .onBookmarkIconClick(collectionName, widget.blogData!.timestamp);
-    }
-  }
+  //   if (_guestUser == true) {
+  //     openSignInDialog(context);
+  //   } else {
+  //     context
+  //         .read<BookmarkBloc>()
+  //         .onBookmarkIconClick(collectionName, widget.blogData!.timestamp);
+  //   }
+  // }
 
   handleShare() {
     final sb = context.read<SignInBloc>();
-    final String _shareTextAndroid = '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
-    final String _shareTextiOS = '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
+    final String _shareTextAndroid =
+        '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
+    final String _shareTextiOS =
+        '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
 
     if (Platform.isAndroid) {
       Share.share(_shareTextAndroid);
-    } else{
+    } else {
       Share.share(_shareTextiOS);
     }
   }
-  
 
   @override
   void initState() {
@@ -90,137 +89,141 @@ class _BlogDetailsState extends State<BlogDetails> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, 
-                children: <Widget>[
+          padding: EdgeInsets.only(top: 20, bottom: 20),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
                     children: [
                       Container(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 35,
-                          width: 35,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(5)),
-                          child: IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(Icons.arrow_back),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                        Spacer(),
-                        Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                borderRadius: BorderRadius.circular(5)),
-                            child: IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(
-                                Icons.share,
-                                size: 22,
-                              ),
-                              onPressed: () {
-                                handleShare();
-                              },
-                            )),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
+                        width: double.infinity,
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Icon(
-                              CupertinoIcons.time,
-                              size: 18,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            Text(
-                              d.date!,
-                              style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          d.title!,
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.grey[800],
-                              letterSpacing: -0.7,
-                              wordSpacing: 1),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8, bottom: 8),
-                          height: 3,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              borderRadius: BorderRadius.circular(40)),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            TextButton.icon(
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStateProperty.resolveWith(
-                                    (states) => Colors.grey[200]),
-                                padding: WidgetStateProperty.resolveWith(
-                                    (states) => EdgeInsets.all(10)),
+                            Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: IconButton(
+                                padding: EdgeInsets.all(0),
+                                icon: Icon(Icons.arrow_back),
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
                               ),
-                              onPressed: () => AppService()
-                                  .openLinkWithCustomTab(context, d.sourceUrl!),
-                              icon: Icon(Feather.external_link,
-                                  size: 20, color: Theme.of(context).primaryColor),
-                              label: _getSourceName(d),
                             ),
                             Spacer(),
-                            IconButton(
-                                icon: BuildLoveIcon(
-                                    collectionName: collectionName,
-                                    uid: sb.uid,
-                                    timestamp: d.timestamp),
-                                onPressed: () {
-                                  handleLoveClick();
-                                }),
-                            IconButton(
-                                icon: BuildBookmarkIcon(
-                                    collectionName: collectionName,
-                                    uid: sb.uid,
-                                    timestamp: d.timestamp),
-                                onPressed: () {
-                                  handleBookmarkClick();
-                                }),
+                            Container(
+                                height: 35,
+                                width: 35,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: IconButton(
+                                  padding: EdgeInsets.all(0),
+                                  icon: Icon(
+                                    Icons.share,
+                                    size: 22,
+                                  ),
+                                  onPressed: () {
+                                    handleShare();
+                                  },
+                                )),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Icon(
+                                  CupertinoIcons.time,
+                                  size: 18,
+                                  color: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  d.date!,
+                                  style: TextStyle(
+                                      fontSize: 13, color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              d.title!,
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.grey[800],
+                                  letterSpacing: -0.7,
+                                  wordSpacing: 1),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8, bottom: 8),
+                              height: 3,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(40)),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                TextButton.icon(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        WidgetStateProperty.resolveWith(
+                                            (states) => Colors.grey[200]),
+                                    padding: WidgetStateProperty.resolveWith(
+                                        (states) => EdgeInsets.all(10)),
+                                  ),
+                                  onPressed: () => AppService()
+                                      .openLinkWithCustomTab(
+                                          context, d.sourceUrl!),
+                                  icon: Icon(Feather.external_link,
+                                      size: 20,
+                                      color: Theme.of(context).primaryColor),
+                                  label: _getSourceName(d),
+                                ),
+                                // Spacer(),
+                                // IconButton(
+                                //     icon: BuildLoveIcon(
+                                //         collectionName: collectionName,
+                                //         uid: sb.uid,
+                                //         timestamp: d.timestamp),
+                                //     onPressed: () {
+                                //       handleLoveClick();
+                                //     }),
+                                // IconButton(
+                                //     icon: BuildBookmarkIcon(
+                                //         collectionName: collectionName,
+                                //         uid: sb.uid,
+                                //         timestamp: d.timestamp),
+                                //     onPressed: () {
+                                //       handleBookmarkClick();
+                                //     }),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -234,7 +237,8 @@ class _BlogDetailsState extends State<BlogDetails> {
                       width: double.infinity,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(0),
-                          child: CustomCacheImage(imageUrl: d.thumbnailImagelUrl))),
+                          child: CustomCacheImage(
+                              imageUrl: d.thumbnailImagelUrl))),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -242,7 +246,8 @@ class _BlogDetailsState extends State<BlogDetails> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       LoveCount(
-                          collectionName: collectionName, timestamp: d.timestamp),
+                          collectionName: collectionName,
+                          timestamp: d.timestamp),
                       SizedBox(
                         width: 15,
                       ),
@@ -268,7 +273,6 @@ class _BlogDetailsState extends State<BlogDetails> {
                     ],
                   ),
                 ),
-
                 HtmlBodyWidget(
                   content: d.description.toString(),
                   isIframeVideoEnabled: true,
@@ -280,7 +284,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                   height: 30,
                 )
               ]),
-          ),
+        ),
       ),
     );
   }

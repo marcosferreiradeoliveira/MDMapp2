@@ -1,7 +1,9 @@
 {
     
+    
     "welcome message" : "Explore every famous place in Bangladesh and find nearby hotels and restaurants with the easiest way. Get realtime directions, estimated costs, travel blogs, and more...",
     "welcome to" : "Welcome to",
+    "exposições" : "Expositions",
 
     "intro-title1" : "No Matter Where You Are",
     "intro-title2" : "Explore Nearby Stuffs",
@@ -11,12 +13,12 @@
     "intro-description3" : "Get directions, costs, and other travel-related stuff in one place...",
     "get started" : "Get Started",
 
-    "explore country" : "Explore Bangladesh",
+    "explore country" : "Explore a Exposição",
     "search places" : "Search Places",
     "popular places" : "Popular Places",
     "special state-1 places" : "Places in Sylhet",
     "special state-2 places" : "Places in Chittagong",
-    "recently added" : "Recently Added",
+    "recently added" : "Itens de Destaque",
     "recommended places" : "Recommended Places",
 
     "people like this" : "People like this",

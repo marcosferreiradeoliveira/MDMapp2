@@ -5,15 +5,15 @@ import 'package:travel_hour/config/config.dart';
 import 'package:travel_hour/pages/home.dart';
 import 'blocs/ads_bloc.dart';
 import 'blocs/blog_bloc.dart';
-import 'blocs/bookmark_bloc.dart';
-import 'blocs/comments_bloc.dart';
-import 'blocs/featured_bloc.dart';
+// import 'blocs/bookmark_bloc.dart';
+// import 'blocs/comments_bloc.dart';
+// import 'blocs/featured_bloc.dart';
 import 'blocs/notification_bloc.dart';
 import 'blocs/other_places_bloc.dart';
 import 'blocs/popular_places_bloc.dart';
 import 'blocs/recent_places_bloc.dart';
-import 'blocs/recommanded_places_bloc.dart';
-import 'blocs/search_bloc.dart';
+// import 'blocs/recommanded_places_bloc.dart';
+// import 'blocs/search_bloc.dart';
 import 'blocs/sign_in_bloc.dart';
 import 'blocs/sp_state_one.dart';
 import 'blocs/sp_state_two.dart';
@@ -42,25 +42,25 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<SignInBloc>(
           create: (context) => SignInBloc(),
         ),
-        ChangeNotifierProvider<CommentsBloc>(
-          create: (context) => CommentsBloc(),
-        ),
-        ChangeNotifierProvider<BookmarkBloc>(
-          create: (context) => BookmarkBloc(),
-        ),
+        // ChangeNotifierProvider<CommentsBloc>(
+        //   create: (context) => CommentsBloc(),
+        // ),
+        // ChangeNotifierProvider<BookmarkBloc>(
+        //   create: (context) => BookmarkBloc(),
+        // ),
         ChangeNotifierProvider<PopularPlacesBloc>(
           create: (context) => PopularPlacesBloc(),
         ),
         ChangeNotifierProvider<RecentPlacesBloc>(
           create: (context) => RecentPlacesBloc(),
         ),
-        ChangeNotifierProvider<RecommandedPlacesBloc>(
-          create: (context) => RecommandedPlacesBloc(),
-        ),
-        ChangeNotifierProvider<FeaturedBloc>(
-          create: (context) => FeaturedBloc(),
-        ),
-        ChangeNotifierProvider<SearchBloc>(create: (context) => SearchBloc()),
+        // ChangeNotifierProvider<RecommandedPlacesBloc>(
+        //   create: (context) => RecommandedPlacesBloc(),
+        // ),
+        // ChangeNotifierProvider<FeaturedBloc>(
+        //   create: (context) => FeaturedBloc(),
+        // ),
+        // ChangeNotifierProvider<SearchBloc>(create: (context) => SearchBloc()),
         ChangeNotifierProvider<NotificationBloc>(
             create: (context) => NotificationBloc()),
         ChangeNotifierProvider<StateBloc>(create: (context) => StateBloc()),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
+// import 'package:line_icons/line_icons.dart';
 import 'package:travel_hour/blocs/other_places_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/models/place.dart';
-import 'package:travel_hour/pages/place_details.dart';
+import 'package:travel_hour/models/item.dart';
+import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'custom_cache_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -29,8 +29,6 @@ class _OtherPlacesState extends State<OtherPlaces> {
   Widget build(BuildContext context) {
     final ob = context.watch<OtherPlacesBloc>();
 
-    
-    
     if (ob.data.isEmpty) return Container();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +75,7 @@ class _OtherPlacesState extends State<OtherPlaces> {
 }
 
 class _ItemList extends StatelessWidget {
-  final Place d;
+  final ItemModel d;
   const _ItemList({Key? key, required this.d}) : super(key: key);
 
   @override
@@ -92,14 +90,13 @@ class _ItemList extends StatelessWidget {
           children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: CustomCacheImage(imageUrl: d.imageUrl1)
-            ),
+                child: CustomCacheImage(imageUrl: d.imagem)),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
                 child: Text(
-                  d.name!,
+                  d.titulo!,
                   maxLines: 2,
                   style: TextStyle(
                       fontSize: 16,
@@ -125,14 +122,14 @@ class _ItemList extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(LineIcons.heart, size: 16, color: Colors.white),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          d.loves.toString(),
-                          style: TextStyle(fontSize: 12, color: Colors.white),
-                        )
+                        // Icon(LineIcons.heart, size: 16, color: Colors.white),
+                        // SizedBox(
+                        //   width: 5,
+                        // ),
+                        // Text(
+                        //   d.loves.toString(),
+                        //   style: TextStyle(fontSize: 12, color: Colors.white),
+                        // )
                       ],
                     ),
                   )),
@@ -140,7 +137,7 @@ class _ItemList extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => nextScreenReplace(context, PlaceDetails(data: d, tag: null)),
+      onTap: () => nextScreenReplace(context, ItemDetails(data: d, tag: null)),
     );
   }
 }
