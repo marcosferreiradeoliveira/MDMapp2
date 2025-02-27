@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:travel_hour/blocs/popular_places_bloc.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:provider/provider.dart';

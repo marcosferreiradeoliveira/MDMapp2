@@ -55,8 +55,7 @@ class RecentPlaces extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               if (rb.data.isEmpty) return LoadingPopularPlacesCard();
 
-              final item = rb.data[index];
-              if (item == null) return SizedBox(); // Evita passar valores null
+              final item = rb.data[index]; // Evita passar valores null
 
               return _ItemList(d: item);
             },
@@ -81,35 +80,54 @@ class _ItemList extends StatelessWidget {
           color: Colors.grey[300],
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Stack(
-          children: [
-            Hero(
-              tag: 'recent${d.timestamp ?? ''}',
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+        child: ClipRRect(
+          // Clip para bordas arredondadas
+          borderRadius: BorderRadius.circular(10),
+          child: Stack(
+            children: [
+              // Imagem principal
+              Hero(
+                tag: 'recent${d.timestamp ?? ''}',
                 child: CustomCacheImage(imageUrl: d.imagem ?? ''),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
+
+              // Sombra aplicada diretamente na imagem
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.6),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              // Texto do título
+              Positioned(
+                bottom: 20,
+                left: 10,
+                right: 10,
                 child: Text(
-                  d.titulo ??
-                      'Nome não disponível', // Corrigido para evitar erro de null
+                  d.titulo ?? 'Nome não disponível',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15, right: 15),
+
+              // Ícone superior direito (se necessário)
+              Positioned(
+                top: 15,
+                right: 15,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
@@ -118,8 +136,8 @@ class _ItemList extends StatelessWidget {
                   ),
                 ),
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
       onTap: () => nextScreen(

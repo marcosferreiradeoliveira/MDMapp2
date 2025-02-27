@@ -1,270 +1,151 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-// import 'package:line_icons/line_icons.dart';
+// import 'package:flutter_icons/flutter_icons.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
+import 'package:travel_hour/models/exposicao.dart';
+import 'package:travel_hour/pages/state_based_places.dart';
 
 class ListCard extends StatelessWidget {
-  final ItemModel? d;
+  final ExposicaoModel? d;
   final String tag;
   final Color? color;
-  const ListCard(
-      {Key? key, required this.d, required this.tag, required this.color})
-      : super(key: key);
+
+  const ListCard({
+    Key? key,
+    required this.d,
+    required this.tag,
+    required this.color,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.bottomRight,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(top: 15, bottom: 0),
-            //color: Colors.grey[200],
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 15, left: 25, right: 10, bottom: 10),
-                  alignment: Alignment.topLeft,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 15, left: 115, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          d?.titulo ?? 'No name',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Feather.map_pin,
-                              size: 12,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            // Expanded(
-                            //   child: Text(
-                            //     d!.location!,
-                            //     maxLines: 1,
-                            //     overflow: TextOverflow.ellipsis,
-                            //     style: TextStyle(
-                            //         fontSize: 13,
-                            //         fontWeight: FontWeight.w400,
-                            //         color: Colors.grey[700]),
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8, bottom: 20),
-                          height: 2,
-                          width: 120,
-                          decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            // Icon(
-                            //   LineIcons.heart,
-                            //   size: 18,
-                            //   color: Colors.orangeAccent,
-                            // ),
-                            // Text(
-                            //   d!.loves.toString(),
-                            //   style: TextStyle(
-                            //       fontSize: 13, color: Colors.grey[600]),
-                            // ),
-                            // SizedBox(
-                            //   width: 20,
-                            // ),
-                            // Icon(
-                            //   LineIcons.commentAlt,
-                            //   size: 18,
-                            //   color: Colors.grey[700],
-                            // ),
-                            // Text(
-                            //   d!.commentsCount.toString(),
-                            //   style: TextStyle(
-                            //       fontSize: 13, color: Colors.grey[600]),
-                            // ),
-                            Spacer(),
-                          ],
-                        ),
-                      ],
-                    ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Stack(
+          children: <Widget>[
+            // Imagem de fundo
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 120,
+              child: CustomCacheImage(
+                imageUrl: d?.thumbnailUrl ?? '',
+              ),
+            ),
+
+            // Camada de sombra
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.6),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-          Positioned(
-              bottom: 30,
-              left: 5,
-              child: Hero(
-                tag: tag,
-                child: Container(
-                    height: 120,
-                    width: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: CustomCacheImage(imageUrl: d?.imagem ?? ''))),
-              ))
-        ],
+
+            // Título em branco
+            Positioned(
+              bottom: 10,
+              left: 15,
+              right: 15,
+              child: Text(
+                d?.name ?? 'No name',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, // Garante que o título fique branco
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      onTap: () => nextScreen(context, ItemDetails(data: d, tag: tag)),
+      onTap: () => nextScreen(
+        context,
+        StateBasedPlaces(
+          stateName: d?.name ?? '',
+          color: color ?? Colors.grey[200],
+        ),
+      ),
     );
   }
 }
 
+// ----------------------------------------------------
+// Segundo modelo de card atualizado
+// ----------------------------------------------------
+
 class ListCard1 extends StatelessWidget {
   final ItemModel d;
   final String? tag;
+
   const ListCard1({Key? key, required this.d, this.tag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Stack(
-        children: <Widget>[
-          Container(
-            alignment: Alignment.bottomRight,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(top: 5, bottom: 5),
-            //color: Colors.grey[200],
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 30, right: 10, bottom: 5),
-                  alignment: Alignment.topLeft,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 30, left: 110, right: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          d.titulo!,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Feather.map_pin,
-                              size: 12,
-                              color: Colors.grey,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            // Expanded(
-                            //   child: Text(
-                            //     d.location!,
-                            //     maxLines: 1,
-                            //     overflow: TextOverflow.ellipsis,
-                            //     style: TextStyle(
-                            //         fontSize: 13,
-                            //         fontWeight: FontWeight.w400,
-                            //         color: Colors.grey[700]),
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 8, bottom: 20),
-                          height: 2,
-                          width: 120,
-                          decoration: BoxDecoration(
-                              color: Colors.blueAccent,
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            // Icon(
-                            //   LineIcons.heart,
-                            //   size: 18,
-                            //   color: Colors.orangeAccent,
-                            // ),
-                            // Text(
-                            //   d.loves.toString(),
-                            //   style: TextStyle(
-                            //       fontSize: 13, color: Colors.grey[600]),
-                            // ),
-                            // SizedBox(
-                            //   width: 20,
-                            // ),
-                            // Icon(
-                            //   LineIcons.commentAlt,
-                            //   size: 18,
-                            //   color: Colors.grey[700],
-                            // ),
-                            // Text(
-                            //   d.description(),
-                            //   style: TextStyle(
-                            //       fontSize: 13, color: Colors.grey[600]),
-                            // ),
-                            Spacer(),
-                          ],
-                        ),
-                      ],
-                    ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5),
+        child: Stack(
+          children: <Widget>[
+            // Imagem de fundo
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 150,
+              child: CustomCacheImage(
+                imageUrl: d.imagem,
+              ),
+            ),
+
+            // Camada de sombra
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.6),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-          Positioned(
-              top: MediaQuery.of(context).size.height * 0.031,
-              left: 10,
-              child: Hero(
-                tag: tag!,
-                child: Container(
-                    height: 120,
-                    width: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: CustomCacheImage(imageUrl: d.imagem))),
-              ))
-        ],
+
+            // Título em branco
+            Positioned(
+              bottom: 10,
+              left: 15,
+              right: 15,
+              child: Text(
+                d.titulo!,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, // Garante que o título fique branco
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      onTap: () => nextScreen(context, ItemDetails(data: d, tag: tag)),
+      onTap: () => nextScreen(
+        context,
+        ItemDetails(data: d, tag: tag),
+      ),
     );
   }
 }

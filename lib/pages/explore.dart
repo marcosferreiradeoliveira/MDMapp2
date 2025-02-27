@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/blocs/popular_places_bloc.dart';
 import 'package:travel_hour/blocs/recent_places_bloc.dart';
 // import 'package:travel_hour/blocs/recommanded_places_bloc.dart';
 // import 'package:travel_hour/blocs/sign_in_bloc.dart';
-import 'package:travel_hour/blocs/sp_state_one.dart';
-import 'package:travel_hour/blocs/sp_state_two.dart';
 import 'package:travel_hour/config/config.dart';
 // import 'package:travel_hour/widgets/popular_places.dart';
-import 'package:travel_hour/widgets/recent_places.dart';
+import 'package:travel_hour/widgets/recent_itens.dart';
 // import 'package:travel_hour/widgets/recommended_places.dart';
+import 'package:travel_hour/widgets/recent_blogs.dart';
+import 'package:travel_hour/blocs/blog_bloc.dart';
 import 'package:travel_hour/widgets/special_state1.dart';
-import 'package:travel_hour/widgets/special_state2.dart';
+import 'package:travel_hour/blocs/sp_state_one.dart';
 
 class Explore extends StatefulWidget {
   Explore({Key? key}) : super(key: key);
@@ -29,7 +28,8 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
   Future reloadData() async {
     Future.delayed(Duration(milliseconds: 0)).then((_) async {
       await context.read<RecentPlacesBloc>().getData();
-      // .then((value) => context.read<SpecialStateOneBloc>().getData())
+      await context.read<BlogBloc>().getData(mounted, 'loves');
+      await context.read<SpecialStateOneBloc>().getData();
       // .then((value) => context.read<SpecialStateTwoBloc>().getData());
       // .then((value) => context.read<RecommandedPlacesBloc>().getData());
     });
@@ -38,7 +38,8 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
   Future _onRefresh() async {
     // context.read<PopularPlacesBloc>().onRefresh(mounted);
     context.read<RecentPlacesBloc>().onRefresh(mounted);
-    // context.read<SpecialStateOneBloc>().onRefresh(mounted);
+    context.read<BlogBloc>().onRefresh(mounted, 'loves');
+    context.read<SpecialStateOneBloc>().onRefresh(mounted);
     // context.read<SpecialStateTwoBloc>().onRefresh(mounted);
     // context.read<RecommandedPlacesBloc>().onRefresh(mounted);
   }
@@ -54,10 +55,12 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Header(),
+                  // Header(),
                   // Featured(),
                   // PopularPlaces(),
+                  SpecialStateOne(),
                   RecentPlaces(),
+                  RecentBlogs()
                   // SpecialStateOne(),
                   // SpecialStateTwo(),
                   // RecommendedPlaces()

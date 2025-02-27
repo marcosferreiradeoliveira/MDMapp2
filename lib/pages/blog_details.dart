@@ -1,21 +1,18 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+// import 'package:flutter_icons/flutter_icons.dart';
 import 'package:share/share.dart';
 // import 'package:travel_hour/blocs/bookmark_bloc.dart';
 import 'package:travel_hour/blocs/sign_in_bloc.dart';
 import 'package:travel_hour/models/blog.dart';
-import 'package:travel_hour/pages/comments.dart';
-import 'package:travel_hour/services/app_service.dart';
-import 'package:travel_hour/utils/next_screen.dart';
-import 'package:travel_hour/utils/sign_in_dialog.dart';
-import 'package:travel_hour/widgets/bookmark_icon.dart';
+// import 'package:travel_hour/pages/comments.dart';
+// import 'package:travel_hour/services/app_service.dart';
+// import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
-import 'package:travel_hour/widgets/love_count.dart';
-import 'package:travel_hour/widgets/love_icon.dart';
+// import 'package:travel_hour/widgets/love_count.dart';
 import 'package:provider/provider.dart';
-import 'package:easy_localization/easy_localization.dart';
+// import 'package:easy_localization/easy_localization.dart';
 import '../blocs/ads_bloc.dart';
 import '../widgets/html_body.dart';
 
@@ -81,7 +78,7 @@ class _BlogDetailsState extends State<BlogDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final SignInBloc sb = context.watch<SignInBloc>();
+    // final SignInBloc sb = context.watch<SignInBloc>();
     final Blog d = widget.blogData!;
 
     return Scaffold(
@@ -186,23 +183,23 @@ class _BlogDetailsState extends State<BlogDetails> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
-                                TextButton.icon(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        WidgetStateProperty.resolveWith(
-                                            (states) => Colors.grey[200]),
-                                    padding: WidgetStateProperty.resolveWith(
-                                        (states) => EdgeInsets.all(10)),
-                                  ),
-                                  onPressed: () => AppService()
-                                      .openLinkWithCustomTab(
-                                          context, d.sourceUrl!),
-                                  icon: Icon(Feather.external_link,
-                                      size: 20,
-                                      color: Theme.of(context).primaryColor),
-                                  label: _getSourceName(d),
-                                ),
-                                // Spacer(),
+                                // TextButton.icon(
+                                //   style: ButtonStyle(
+                                //     backgroundColor:
+                                //         WidgetStateProperty.resolveWith(
+                                //             (states) => Colors.grey[200]),
+                                //     padding: WidgetStateProperty.resolveWith(
+                                //         (states) => EdgeInsets.all(10)),
+                                //   ),
+                                //   onPressed: () => AppService()
+                                //       .openLinkWithCustomTab(
+                                //           context, d.thumbnailImageUrl!),
+                                //   icon: Icon(Feather.external_link,
+                                //       size: 20,
+                                //       color: Theme.of(context).primaryColor),
+                                //   label: _getSourceName(d),
+                                // ),
+                                // // Spacer(),
                                 // IconButton(
                                 //     icon: BuildLoveIcon(
                                 //         collectionName: collectionName,
@@ -237,42 +234,47 @@ class _BlogDetailsState extends State<BlogDetails> {
                       width: double.infinity,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(0),
-                          child: CustomCacheImage(
-                              imageUrl: d.thumbnailImagelUrl))),
+                          child:
+                              CustomCacheImage(imageUrl: d.thumbnailImageUrl))),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      LoveCount(
-                          collectionName: collectionName,
-                          timestamp: d.timestamp),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      TextButton.icon(
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.resolveWith(
-                                  (states) => Theme.of(context).primaryColor)),
-                          onPressed: () {
-                            nextScreen(
-                                context,
-                                CommentsPage(
-                                    collectionName: collectionName,
-                                    timestamp: d.timestamp));
-                          },
-                          icon: Icon(
-                            Feather.message_circle,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            'comments',
-                            style: TextStyle(color: Colors.white),
-                          ).tr())
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: <Widget>[
+                //       LoveCount(
+                //           collectionName: collectionName,
+                //           timestamp: d.timestamp),
+                //       SizedBox(
+                //         width: 15,
+                //       ),
+                //       TextButton.icon(
+                //           style: ButtonStyle(
+                //               backgroundColor: WidgetStateProperty.resolveWith(
+                //                   (states) => Theme.of(context).primaryColor)),
+                //           onPressed: () {
+                //             nextScreen(
+                //                 context,
+                //                 CommentsPage(
+                //                     collectionName: collectionName,
+                //                     timestamp: d.timestamp));
+                //           },
+                //           icon: Icon(
+                //             Feather.message_circle,
+                //             color: Colors.white,
+                //           ),
+                //           label: Text(
+                //             'comments',
+                //             style: TextStyle(color: Colors.white),
+                //           ).tr())
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: <Widget>[
                 HtmlBodyWidget(
                   content: d.description.toString(),
                   isIframeVideoEnabled: true,
@@ -289,15 +291,16 @@ class _BlogDetailsState extends State<BlogDetails> {
     );
   }
 
-  Text _getSourceName(Blog d) {
-    return Text(
-      d.sourceUrl!.contains('www')
-          ? d.sourceUrl!.replaceAll('https://www.', '').split('.').first
-          : d.sourceUrl!.replaceAll('https://', '').split('.').first,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: TextStyle(
-          color: Colors.grey[900], fontSize: 13, fontWeight: FontWeight.w500),
-    );
-  }
+//   Text _getSourceName(Blog d) {
+//     return Text(
+//       d.sourceUrl!.contains('www')
+//           ? d.sourceUrl!.replaceAll('https://www.', '').split('.').first
+//           : d.sourceUrl!.replaceAll('https://', '').split('.').first,
+//       maxLines: 1,
+//       overflow: TextOverflow.ellipsis,
+//       style: TextStyle(
+//           color: Colors.grey[900], fontSize: 13, fontWeight: FontWeight.w500),
+//     );
+//   }
+// }
 }

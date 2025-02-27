@@ -1,41 +1,35 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Blog {
-
   String? title;
+  String? title_en;
+
   String? description;
-  String? thumbnailImagelUrl;
-  int? loves;
-  String? sourceUrl;
+  String? description_en;
+  String? thumbnailImageUrl;
+
   String? date;
   String? timestamp;
 
-  Blog({
+  Blog(
+      {this.title,
+      this.description,
+      this.date,
+      this.timestamp,
+      this.title_en,
+      this.description_en,
+      this.thumbnailImageUrl});
 
-    this.title,
-    this.description,
-    this.thumbnailImagelUrl,
-    this.loves,
-    this.sourceUrl,
-    this.date,
-    this.timestamp
-    
-  });
-
-
-  factory Blog.fromFirestore(DocumentSnapshot snapshot){
+  factory Blog.fromFirestore(DocumentSnapshot snapshot) {
     Map d = snapshot.data() as Map<dynamic, dynamic>;
     return Blog(
       title: d['title'],
       description: d['description'],
-      thumbnailImagelUrl: d['image url'],
-      loves: d['loves'],
-      sourceUrl: d['source'],
+      thumbnailImageUrl: d['thumbnailImageUrl'],
       date: d['date'],
-      timestamp: d['timestamp'], 
-
-
+      timestamp: d['timestamp'],
+      title_en: d['title_en'],
+      description_en: d['description_en'],
     );
   }
 }

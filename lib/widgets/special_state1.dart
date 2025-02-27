@@ -26,12 +26,12 @@ class SpecialStateOne extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                'special state-1 places',
+                'exposicoes',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: Colors.grey[800], 
-                    wordSpacing: 1, 
+                    color: Colors.grey[800],
+                    wordSpacing: 1,
                     letterSpacing: -0.6),
               ).tr(),
               Spacer(),
@@ -54,7 +54,7 @@ class SpecialStateOne extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: spb.data.isEmpty ? 4 : spb.data.length,
+            itemCount: spb.data.isEmpty ? 4 : 1,
             itemBuilder: (BuildContext context, int index) {
               if (spb.data.isEmpty) return Container();
               return ListCard(
