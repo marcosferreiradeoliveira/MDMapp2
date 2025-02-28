@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:travel_hour/blocs/sp_state_one.dart';
 import 'package:travel_hour/models/colors.dart';
-import 'package:travel_hour/config/config.dart';
+// import 'package:travel_hour/config/config.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/pages/state_based_places.dart';
+import 'package:travel_hour/pages/exposicao_details.dart';
 import 'package:travel_hour/utils/list_card.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -39,9 +39,18 @@ class SpecialStateOne extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () => nextScreen(
                     context,
-                    StateBasedPlaces(
-                      stateName: Config().specialState1,
+                    ExposicaoDetails(
+                      name: spb.data[0].name,
                       color: (ColorList().randomColors..shuffle()).first,
+                      exposicaoId: spb.data[0].exposicaoId,
+                      descricao: spb.data[0].descricao,
+                      descricao_en: spb.data[0].descricao_en,
+                      curador: spb.data[0].curador,
+                      subtitulo: spb.data[0].subtitulo,
+                      subtitulo_en: spb.data[0].subtitulo_en,
+                      url_libras: spb.data[0].url_libras,
+                      url_audiodescricao: spb.data[0].url_audiodescricao,
+                      data_inicio: spb.data[0].data_inicio,
                     )),
               )
             ],

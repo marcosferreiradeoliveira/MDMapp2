@@ -114,22 +114,22 @@ class _BlogDetailsState extends State<BlogDetails> {
                               ),
                             ),
                             Spacer(),
-                            Container(
-                                height: 35,
-                                width: 35,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: IconButton(
-                                  padding: EdgeInsets.all(0),
-                                  icon: Icon(
-                                    Icons.share,
-                                    size: 22,
-                                  ),
-                                  onPressed: () {
-                                    handleShare();
-                                  },
-                                )),
+                            // Container(
+                            //     height: 35,
+                            //     width: 35,
+                            //     decoration: BoxDecoration(
+                            //         color: Colors.grey[200],
+                            //         borderRadius: BorderRadius.circular(5)),
+                            //     child: IconButton(
+                            //       padding: EdgeInsets.all(0),
+                            //       icon: Icon(
+                            //         Icons.share,
+                            //         size: 22,
+                            //       ),
+                            //       onPressed: () {
+                            //         handleShare();
+                            //       },
+                            //     )),
                           ],
                         ),
                       ),

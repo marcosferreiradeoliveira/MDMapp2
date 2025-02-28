@@ -2,58 +2,58 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ExposicaoModel {
   String? name;
-  String? nameEn;
-  String? thumbnailUrl;
+  String? titulo_en;
+  String? thumbnail;
   String? descricao;
-  String? descricaoEn;
+  String? descricao_en;
   String? timestamp;
   String? curador;
-  String? curadorEn;
   String? subtitulo;
-  String? subtituloEn;
-  String? urlLibras;
-  String? urlAudiodescricao;
-  DateTime? dataInicio;
-  DateTime? dataFim;
+  String? subtitulo_en;
+  String? url_libras;
+  String? exposicaoId;
+  String? url_audiodescricao;
+  DateTime? data_inicio;
+  DateTime? data_fim;
 
   ExposicaoModel({
     this.name,
-    this.nameEn,
-    this.thumbnailUrl,
+    this.titulo_en,
+    this.thumbnail,
     this.descricao,
-    this.descricaoEn,
+    this.descricao_en,
     this.timestamp,
     this.curador,
-    this.curadorEn,
     this.subtitulo,
-    this.subtituloEn,
-    this.urlLibras,
-    this.urlAudiodescricao,
-    this.dataInicio,
-    this.dataFim,
+    this.subtitulo_en,
+    this.url_libras,
+    this.url_audiodescricao,
+    this.data_inicio,
+    this.data_fim,
+    this.exposicaoId,
   });
 
   factory ExposicaoModel.fromFirestore(DocumentSnapshot snapshot) {
     Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
     return ExposicaoModel(
       name: d['name'],
-      nameEn: d['name_en'],
-      thumbnailUrl: d['thumbnail'],
+      titulo_en: d['titulo_en'],
+      thumbnail: d['thumbnail'],
       descricao: d['descricao'],
-      descricaoEn: d['descricao_en'],
+      descricao_en: d['descricao_en'],
       timestamp: d['timestamp'],
       curador: d['curador'],
-      curadorEn: d['curador_en'],
       subtitulo: d['subtitulo'],
-      subtituloEn: d['subtitulo_en'],
-      urlLibras: d['url_libras'],
-      urlAudiodescricao: d['url_audiodescricao'],
-      dataInicio: (d['data_inicio'] != null)
+      subtitulo_en: d['subtitulo_en'],
+      url_libras: d['url_libras'],
+      url_audiodescricao: d['url_audiodescricao'],
+      data_inicio: (d['data_inicio'] != null)
           ? (d['data_inicio'] as Timestamp).toDate()
           : null,
-      dataFim: (d['data_fim'] != null)
+      data_fim: (d['data_fim'] != null)
           ? (d['data_fim'] as Timestamp).toDate()
           : null,
+      exposicaoId: d['exposicaoId'],
     );
   }
 }

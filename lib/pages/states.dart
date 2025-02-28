@@ -6,7 +6,8 @@ import 'package:travel_hour/blocs/blog_bloc.dart';
 import 'package:travel_hour/blocs/state_bloc.dart';
 import 'package:travel_hour/models/colors.dart';
 import 'package:travel_hour/models/exposicao.dart';
-import 'package:travel_hour/pages/state_based_places.dart';
+import 'package:travel_hour/pages/exposicao_details.dart';
+
 import 'package:travel_hour/utils/empty.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
@@ -146,7 +147,7 @@ class _ItemList extends StatelessWidget {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: CustomCacheImage(
-                      imageUrl: d.thumbnailUrl,
+                      imageUrl: d.thumbnail,
                     )),
               ),
               Align(
@@ -163,9 +164,19 @@ class _ItemList extends StatelessWidget {
           )),
       onTap: () => nextScreen(
           context,
-          StateBasedPlaces(
-            stateName: d.name,
+          ExposicaoDetails(
+            name: d.name,
             color: (ColorList().randomColors..shuffle()).first,
+            exposicaoId: d.exposicaoId,
+            descricao: d.descricao,
+            descricao_en: d.descricao_en,
+            curador: d.curador,
+            subtitulo: d.subtitulo,
+            subtitulo_en: d.subtitulo_en,
+            url_libras: d.url_libras,
+            url_audiodescricao: d.url_audiodescricao,
+            data_inicio: d.data_inicio,
+            data_fim: d.data_fim,
           )),
     );
   }

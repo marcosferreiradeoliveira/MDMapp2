@@ -5,7 +5,7 @@ import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/models/exposicao.dart';
-import 'package:travel_hour/pages/state_based_places.dart';
+import 'package:travel_hour/pages/exposicao_details.dart';
 
 class ListCard extends StatelessWidget {
   final ExposicaoModel? d;
@@ -31,7 +31,7 @@ class ListCard extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 120,
               child: CustomCacheImage(
-                imageUrl: d?.thumbnailUrl ?? '',
+                imageUrl: d?.thumbnail ?? '',
               ),
             ),
 
@@ -72,8 +72,11 @@ class ListCard extends StatelessWidget {
       ),
       onTap: () => nextScreen(
         context,
-        StateBasedPlaces(
-          stateName: d?.name ?? '',
+        ExposicaoDetails(
+          exposicaoId: d?.exposicaoId ?? '',
+          descricao_en: d?.descricao_en ?? '',
+          name: d?.name ?? '',
+          descricao: d?.descricao ?? '',
           color: color ?? Colors.grey[200],
         ),
       ),

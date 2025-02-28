@@ -17,7 +17,7 @@ class SpecialStateOneBloc extends ChangeNotifier {
         .collection('exposições')
         // .where('state', isEqualTo: Config().specialState1)
         .orderBy('timestamp', descending: true)
-        .limit(4)
+        // .limit(4)
         .get();
 
     List<DocumentSnapshot> _snap = [];
