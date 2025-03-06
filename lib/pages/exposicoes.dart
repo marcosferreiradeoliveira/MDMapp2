@@ -14,14 +14,14 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class StatesPage extends StatefulWidget {
-  StatesPage({Key? key}) : super(key: key);
+class ExposicoesPage extends StatefulWidget {
+  ExposicoesPage({Key? key}) : super(key: key);
 
   @override
-  _StatesPageState createState() => _StatesPageState();
+  _ExposicoesPageState createState() => _ExposicoesPageState();
 }
 
-class _StatesPageState extends State<StatesPage>
+class _ExposicoesPageState extends State<ExposicoesPage>
     with AutomaticKeepAliveClientMixin {
   ScrollController? controller;
   final scaffoldKey = GlobalKey<ScaffoldState>();

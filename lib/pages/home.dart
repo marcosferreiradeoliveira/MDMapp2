@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_icons/flutter_icons.dart';
+// import 'package:flutter_icons/flutter_icons.dart ';
 import 'package:travel_hour/blocs/notification_bloc.dart';
 import 'package:travel_hour/pages/blogs.dart';
 import 'package:travel_hour/pages/explore.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/pages/states.dart';
+import 'package:travel_hour/pages/exposicoes.dart';
 import 'package:travel_hour/services/app_service.dart';
 import 'package:travel_hour/utils/snacbar.dart';
 import 'package:easy_localization/easy_localization.dart';
-
+import 'package:travel_hour/pages/sobre.dart';
+import 'package:travel_hour/pages/ingresso.dart';
+import 'package:travel_hour/pages/contato.dart';
+import 'package:travel_hour/pages/programacao.dart';
 // import '../blocs/ads_bloc.dart';
 import '../services/notification_service.dart';
 
@@ -25,10 +28,16 @@ class _HomePageState extends State<HomePage> {
 
   final List<Map<String, dynamic>> menuItems = [
     {"icon": Icons.home, "title": "Home", "page": Explore()},
-    {"icon": Icons.grid_view, "title": "Exposições", "page": StatesPage()},
-    {"icon": Icons.article, "title": "Novides", "page": BlogPage()},
-    // {"icon": Icons.bookmark, "title": "Bookmarks", "page": BookmarkPage()},
-    // {"icon": Icons.person, "title": "Profile", "page": ProfilePage()},
+    {"icon": Icons.grid_view, "title": "Exposições", "page": ExposicoesPage()},
+    {"icon": Icons.article, "title": "Novidades", "page": BlogPage()},
+    {"icon": Icons.airplane_ticket, "title": "Ingressos", "page": Ingressos()},
+    {
+      "icon": Icons.calendar_month_outlined,
+      "title": "Programação",
+      "page": Programacao()
+    },
+    {"icon": Icons.album_outlined, "title": "Sobre", "page": Sobre()},
+    {"icon": Icons.contact_mail, "title": "Contato", "page": Contato()},
   ];
 
   void onTabTapped(int index) {

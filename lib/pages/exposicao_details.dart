@@ -13,6 +13,7 @@ import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:travel_hour/widgets/html_body.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
+import 'package:travel_hour/widgets/youtube_player.dart';
 
 class ExposicaoDetails extends StatefulWidget {
   final String? descricao;
@@ -54,7 +55,7 @@ class ExposicaoDetails extends StatefulWidget {
 
 class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   bool _isLoading = true;
-  // bool _hasData = false;
+  bool _hasData = false;
   List<DocumentSnapshot> _snap = [];
   List<ItemModel> _data = [];
 
@@ -104,6 +105,9 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                   ),
                 ),
               ],
+            ),
+            YoutubePlayerDemoApp(
+              url: widget.url_libras ?? '',
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -213,36 +217,36 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
             Text('Curador: ${widget.curador ?? widget.name}'),
 
             // Mostrar status do carregamento
-            // if (_isLoading) Center(child: CircularProgressIndicator()),
+            if (_isLoading) Center(child: CircularProgressIndicator()),
 
-            // // Mostrar mensagem se não houver dados
-            // if (!_isLoading && !_hasData)
-            //   Center(child: Text('Nenhum item encontrado')),
+            // Mostrar mensagem se não houver dados
+            if (!_isLoading && !_hasData)
+              Center(child: Text('Nenhum item encontrado')),
 
             // Mostrar lista de itens
-            // if (!_isLoading && _hasData)
-            //   ListView.builder(
-            //     shrinkWrap: true,
-            //     physics: NeverScrollableScrollPhysics(),
-            //     itemCount: _data.length,
-            //     itemBuilder: (context, index) {
-            //       return Card(
-            //         margin: EdgeInsets.only(bottom: 15),
-            //         child: ListTile(
-            //           title: Text(_data[index].titulo ?? 'Sem título'),
-            //           subtitle: Text(_data[index].descricao ?? 'Sem descrição'),
-            //           leading: _data[index].imagem != null
-            //               ? Image.network(
-            //                   _data[index].imagem!,
-            //                   width: 50,
-            //                   height: 50,
-            //                   fit: BoxFit.cover,
-            //                 )
-            //               : Icon(Icons.image),
-            //         ),
-            //       );
-            //     },
-            //   ),
+            if (!_isLoading && _hasData)
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _data.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: ListTile(
+                      title: Text(_data[index].titulo ?? 'Sem título'),
+                      subtitle: Text(_data[index].descricao ?? 'Sem descrição'),
+                      leading: _data[index].imagem != null
+                          ? Image.network(
+                              _data[index].imagem!,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            )
+                          : Icon(Icons.image),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),
@@ -276,30 +280,24 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   }
 
   Future<Null> _getData() async {
-    // setState(() => _hasData = true);
     QuerySnapshot data;
     if (_isLoading) {
       data = await FirebaseFirestore.instance
           .collection('Item')
-          .where('exposicaoId', isEqualTo: widget.exposicaoId)
+          // .where('exposicaoId', isEqualTo: widget.exposicaoId)
           .get();
-      debugPrint(
-          'Número de documentos encontrados: ${data.docs.length}'); // Verifique quantos documentos foram retornados
 
       if (data.docs.length > 0) {
-        _snap.addAll(data.docs);
-        _data = _snap.map((e) => ItemModel.fromFirestore(e)).toList();
-        debugPrint('Número de itens encontrados: ${_data.length}');
-        for (var item in _data) {
-          debugPrint(
-              'Item: ${item.titulo}'); // Verifique o conteúdo de cada item
-        }
-        // Verifique quantos itens foram carregados
+        setState(() {
+          _snap.addAll(data.docs);
+          _data = _snap.map((e) => ItemModel.fromFirestore(e)).toList();
+          _isLoading = false;
+          _hasData = true;
+        });
       } else {
         setState(() {
           _isLoading = false;
-          // _hasData = false;
-          debugPrint('Nada encontrado');
+          _hasData = false;
         });
       }
     }
@@ -351,7 +349,7 @@ class _exposicaoDetails extends State<exposicaoDetails> {
     if (_lastVisible == null)
       data = await firestore
           .collection(collectionName)
-          .where('exposicaoId', isEqualTo: widget.exposicaoId)
+          .where('exposicaoId', isEqualTo: 20250212121458)
           // .orderBy('loves', descending: true)
           // .limit(5)
           .get();
