@@ -157,7 +157,7 @@ class _IngressosState extends State {
                           fontWeight: FontWeight.w900,
                           letterSpacing: -0.6,
                           wordSpacing: 1,
-                          color: Colors.grey[800])),
+                          color: Colors.black)),
                   Container(
                     margin: EdgeInsets.only(top: 8, bottom: 8),
                     height: 3,
@@ -198,11 +198,15 @@ class _IngressosState extends State {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: _launchUrl,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[100],
+                      foregroundColor: Colors.white,
+                    ),
                     child: Text(
                       'Clique aqui para comprar seu ingresso',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.grey[800],
+                        color: Colors.black,
                       ),
                     ),
                   )

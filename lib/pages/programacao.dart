@@ -151,7 +151,7 @@ class _ProgramacaoState extends State {
                   //         }),
                   //   ],
                   // ),
-                  Text('Programacao',
+                  Text('Programação',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -198,6 +198,30 @@ class _ProgramacaoState extends State {
                 children: <Widget>[
                   Text(
                     'Em 8 de março, Dia Internacional da Mulher e data de abertura da exposição, o público poderá conferir uma programação especial.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Bate-papo: a mostra estará aberta das 9h às 20h, e às 11h, no Cinema, acontece um bate-papo com as artistas Evna Moura, Renata Aguiar e Leila Jinkings, sob a mediação da curadora Sissa Aneleh.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Apresentação: no período da tarde, às 14h, haverá a apresentação Som em Cena: Encantarias Amazônidas, uma experiência sonora, realizada pelo CCBB Educativo, que se estende até 14h25 no Mezanino.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Show: encerrando a programação do dia, o show Vertentes: Ritmos do Pará, com Ellie Valente e Liége, acontece das 16h às 17h30, também no Mezanino, trazendo a riqueza musical da região em uma celebração vibrante da cultura amazônica.',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[800],

@@ -8,12 +8,12 @@ import 'package:travel_hour/utils/list_card.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class SpecialStateOne extends StatelessWidget {
-  SpecialStateOne({Key? key}) : super(key: key);
+class ExposicaoState extends StatelessWidget {
+  ExposicaoState({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final spb = context.watch<SpecialStateOneBloc>();
+    final spb = context.watch<ExposicaoStateBloc>();
 
     return Column(
       children: <Widget>[
@@ -26,7 +26,7 @@ class SpecialStateOne extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                'exposicoes',
+                'Exposição',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,

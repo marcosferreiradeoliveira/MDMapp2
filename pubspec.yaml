@@ -1,5 +1,5 @@
 name: travel_hour
-description: A new Flutter application.
+description: App Museu das Mulheres
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -99,7 +99,7 @@ flutter:
     - assets/flr/
     - assets/translations/
     - assets/.env
-
+    - assets/images/logo.png
     
 
   fonts:

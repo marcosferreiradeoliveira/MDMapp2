@@ -275,12 +275,16 @@ class _BlogDetailsState extends State<BlogDetails> {
                 //   child: Row(
                 //     mainAxisAlignment: MainAxisAlignment.start,
                 //     children: <Widget>[
-                HtmlBodyWidget(
-                  content: d.description.toString(),
-                  isIframeVideoEnabled: true,
-                  isVideoEnabled: true,
-                  isimageEnabled: true,
-                  fontSize: null,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 8, left: 20, right: 20),
+                  child: HtmlBodyWidget(
+                    content: d.description.toString(),
+                    isIframeVideoEnabled: true,
+                    isVideoEnabled: true,
+                    isimageEnabled: true,
+                    fontSize: null,
+                  ),
                 ),
                 SizedBox(
                   height: 30,

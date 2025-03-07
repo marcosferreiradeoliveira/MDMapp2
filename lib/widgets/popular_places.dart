@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travel_hour/blocs/popular_places_bloc.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/pages/more_places.dart';
+import 'package:travel_hour/pages/mais_itens.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
@@ -36,7 +36,7 @@ class PopularPlaces extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () => nextScreen(
                     context,
-                    MorePlacesPage(
+                    MaisItensPage(
                       title: 'popular',
                       color: Colors.grey[800],
                     )),

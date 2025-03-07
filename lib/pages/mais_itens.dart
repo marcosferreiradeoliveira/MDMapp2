@@ -10,19 +10,19 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class MorePlacesPage extends StatefulWidget {
+class MaisItensPage extends StatefulWidget {
   final String title;
   final Color? color;
-  MorePlacesPage({Key? key, required this.title, required this.color})
+  MaisItensPage({Key? key, required this.title, required this.color})
       : super(key: key);
 
   @override
-  _MorePlacesPageState createState() => _MorePlacesPageState();
+  _MaisItensPageState createState() => _MaisItensPageState();
 }
 
-class _MorePlacesPageState extends State<MorePlacesPage> {
+class _MaisItensPageState extends State<MaisItensPage> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final String collectionName = 'places';
+  final String collectionName = 'Item';
   ScrollController? controller;
   DocumentSnapshot? _lastVisible;
   late bool _isLoading;
@@ -64,15 +64,15 @@ class _MorePlacesPageState extends State<MorePlacesPage> {
     if (_lastVisible == null)
       data = await firestore
           .collection(collectionName)
-          .orderBy(_orderBy, descending: _descending)
-          .limit(5)
+          // .orderBy(_orderBy, descending: _descending)
+          // .limit(5)
           .get();
     else
       data = await firestore
           .collection(collectionName)
-          .orderBy(_orderBy, descending: _descending)
-          .startAfter([_lastVisible![_orderBy]])
-          .limit(5)
+          // .orderBy(_orderBy, descending: _descending)
+          // .startAfter([_lastVisible![_orderBy]])
+          // .limit(5)
           .get();
 
     if (data.docs.length > 0) {
@@ -113,33 +113,41 @@ class _MorePlacesPageState extends State<MorePlacesPage> {
           controller: controller,
           slivers: <Widget>[
             SliverAppBar(
-              automaticallyImplyLeading: false,
+              automaticallyImplyLeading:
+                  false, // Não coloca o ícone automaticamente
               pinned: true,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-              backgroundColor: widget.color,
-              expandedHeight: 140,
+              leading: null, // Não usa o ícone automático
+              backgroundColor: Colors.red[100],
+              expandedHeight: 80,
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: false,
                 background: Container(
-                  color: widget.color,
-                  height: 140,
+                  color: Colors.grey[100],
+                  height: 80,
                   width: double.infinity,
                 ),
-                title: Text(
-                  '${widget.title} places',
-                  style: TextStyle(color: Colors.white),
-                ).tr(),
-                titlePadding: EdgeInsets.only(left: 20, bottom: 15, right: 15),
+                titlePadding:
+                    EdgeInsets.zero, // Remover o padding padrão do título
+                title: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.keyboard_arrow_left, // Seta para a esquerda
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 10), // Espaçamento entre a seta e o título
+                    Expanded(
+                      child: Text(
+                        '${widget.title}',
+                        style: TextStyle(color: Colors.black, fontSize: 12),
+                      ).tr(),
+                    ),
+                  ],
+                ),
               ),
             ),
             SliverPadding(
@@ -238,11 +246,11 @@ class _ListItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            Feather.map_pin,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
+                          // Icon(
+                          //   Feather.map_pin,
+                          //   size: 16,
+                          //   color: Colors.grey,
+                          // ),
                           // SizedBox(
                           //   width: 3,
                           // ),
@@ -261,41 +269,41 @@ class _ListItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(
-                            CupertinoIcons.time,
-                            size: 16,
-                            color: Colors.grey[700],
-                          ),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            d.date!,
-                            style: TextStyle(
-                                fontSize: 13, color: Colors.grey[700]),
-                          ),
-                          Spacer(),
-                          Icon(
-                            LineIcons.heart,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
+                          // Icon(
+                          //   CupertinoIcons.time,
+                          //   size: 16,
+                          //   color: Colors.grey[700],
+                          // ),
                           // SizedBox(
                           //   width: 3,
                           // ),
                           // Text(
-                          //   d.loves.toString(),
+                          //   d.date!,
                           //   style: TextStyle(
                           //       fontSize: 13, color: Colors.grey[700]),
                           // ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            LineIcons.comment,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
+                          // Spacer(),
+                          // Icon(
+                          //   LineIcons.heart,
+                          //   size: 16,
+                          //   color: Colors.grey,
+                          // ),
+                          // // SizedBox(
+                          // //   width: 3,
+                          // // ),
+                          // // Text(
+                          // //   d.loves.toString(),
+                          // //   style: TextStyle(
+                          // //       fontSize: 13, color: Colors.grey[700]),
+                          // // ),
+                          // SizedBox(
+                          //   width: 10,
+                          // ),
+                          // Icon(
+                          //   LineIcons.comment,
+                          //   size: 16,
+                          //   color: Colors.grey,
+                          // ),
                           // SizedBox(
                           //   width: 3,
                           // ),

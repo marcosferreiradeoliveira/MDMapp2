@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:line_icons/line_icons.dart';
-// import 'package:travel_hour/models/exposicao.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/empty.dart';
@@ -14,6 +13,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:travel_hour/widgets/html_body.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:travel_hour/widgets/youtube_player.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+final player = AudioPlayer();
 
 class ExposicaoDetails extends StatefulWidget {
   final String? descricao;
@@ -65,12 +67,38 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
     _getData();
   }
 
+  void _showAudioPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AudioPopup(audioUrl: widget.url_audiodescricao ?? '');
+      },
+    );
+  }
+
+  void _showYoutubePopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: YoutubePlayerDemoApp(
+              url: widget.url_libras ?? '',
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.name ?? ''),
-        backgroundColor: widget.color,
+        title: Text('Exposições'),
+        backgroundColor: Colors.grey[200],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -106,8 +134,28 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                 ),
               ],
             ),
-            YoutubePlayerDemoApp(
-              url: widget.url_libras ?? '',
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _showYoutubePopup(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 215, 215, 215),
+                      foregroundColor: Colors.black),
+                  child: Text('Libras'),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    _showAudioPopup(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 215, 215, 215),
+                      foregroundColor: Colors.black),
+                  child: Text('Áudiodescrição'),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -115,42 +163,6 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.start,
-                  //   children: <Widget>[
-                  //     Icon(
-                  //       Icons.location_on,
-                  //       size: 20,
-                  //       color: Colors.grey,
-                  //     ),
-                  //     Expanded(
-                  //         child: Text(
-                  //       widget.data!.location!,
-                  //       style: TextStyle(
-                  //         fontSize: 13,
-                  //         color: Colors.grey[600],
-                  //       ),
-                  //       maxLines: 2,
-                  //       overflow: TextOverflow.ellipsis,
-                  //     )),
-                  //     IconButton(
-                  //         icon: BuildLoveIcon(
-                  //             collectionName: collectionName,
-                  //             uid: sb.uid,
-                  //             timestamp: widget.data!.timestamp),
-                  //         onPressed: () {
-                  //           handleLoveClick();
-                  //         }),
-                  //     IconButton(
-                  //         icon: BuildBookmarkIcon(
-                  //             collectionName: collectionName,
-                  //             uid: sb.uid,
-                  //             timestamp: widget.data!.timestamp),
-                  //         onPressed: () {
-                  //           handleBookmarkClick();
-                  //         }),
-                  //   ],
-                  // ),
                   Text(widget.name!,
                       style: TextStyle(
                           fontSize: 20,
@@ -166,27 +178,6 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(40)),
                   ),
-                  // Row(
-                  //   children: <Widget>[
-                  //     // LoveCount(
-                  //     //     collectionName: collectionName,
-                  //     //     timestamp: widget.data!.timestamp),
-                  //     // SizedBox(
-                  //     //   width: 20,
-                  //     // ),
-                  //     // Icon(
-                  //     //   Feather.message_circle,
-                  //     //   color: Colors.grey,
-                  //     //   size: 20,
-                  //     // ),
-                  //     // SizedBox(
-                  //     //   width: 2,
-                  //     // ),
-                  //     // CommentCount(
-                  //     //     collectionName: collectionName,
-                  //     //     timestamp: widget.data!.timestamp)
-                  //   ],
-                  // ),
                 ],
               ),
             ),
@@ -206,43 +197,60 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                 ],
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.all(20),
-            //   child: TodoWidget(placeData: widget.data),
-            // ),
-            Text('Id : ${widget.exposicaoId}'),
-            // Text('Data : ${_data[0].titulo}'),
-            Text(
-                'Detalhes da exposição: ${widget.descricao ?? widget.descricao_en}'),
-            Text('Curador: ${widget.curador ?? widget.name}'),
-
-            // Mostrar status do carregamento
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, bottom: 8, left: 20, right: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("Obras",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: -0.6,
+                          wordSpacing: 1,
+                          color: Colors.grey[800])),
+                  Container(
+                    margin: EdgeInsets.only(top: 8, bottom: 8),
+                    height: 3,
+                    width: 150,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(40)),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
             if (_isLoading) Center(child: CircularProgressIndicator()),
-
-            // Mostrar mensagem se não houver dados
             if (!_isLoading && !_hasData)
               Center(child: Text('Nenhum item encontrado')),
-
-            // Mostrar lista de itens
             if (!_isLoading && _hasData)
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: _data.length,
                 itemBuilder: (context, index) {
+                  final item = _data[index];
+
                   return Card(
                     margin: EdgeInsets.only(bottom: 15),
                     child: ListTile(
-                      title: Text(_data[index].titulo ?? 'Sem título'),
-                      subtitle: Text(_data[index].descricao ?? 'Sem descrição'),
-                      leading: _data[index].imagem != null
+                      title: Text(item.titulo ?? 'Sem título'),
+                      subtitle: Text(item.descricao ?? 'Sem descrição'),
+                      leading: item.imagem != null
                           ? Image.network(
-                              _data[index].imagem!,
+                              item.imagem!,
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
                             )
                           : Icon(Icons.image),
+                      onTap: () => nextScreen(
+                          context,
+                          ItemDetails(
+                              data: item,
+                              tag: 'recent${item.timestamp ?? ''}')),
                     ),
                   );
                 },
@@ -272,8 +280,6 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
               CustomCacheImage(
                   imageUrl:
                       'https://www.aen.pr.gov.br/sites/default/arquivos_restritos/files/imagem/2023-02/exposicao_fora_das_sombras_1._credito_marcello_kawase.jpg'),
-              // CustomCacheImage(imageUrl: widget.data!.imageUrl2),
-              // CustomCacheImage(imageUrl: widget.data!.imageUrl3),
             ]),
       ),
     );
@@ -282,10 +288,7 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   Future<Null> _getData() async {
     QuerySnapshot data;
     if (_isLoading) {
-      data = await FirebaseFirestore.instance
-          .collection('Item')
-          // .where('exposicaoId', isEqualTo: widget.exposicaoId)
-          .get();
+      data = await FirebaseFirestore.instance.collection('Item').get();
 
       if (data.docs.length > 0) {
         setState(() {
@@ -305,321 +308,101 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   }
 }
 
-class exposicaoDetails extends StatefulWidget {
-  final String? exposicaoId;
-  final Color? color;
-  exposicaoDetails({Key? key, required this.exposicaoId, required this.color})
-      : super(key: key);
+class AudioPopup extends StatefulWidget {
+  final String audioUrl;
+
+  const AudioPopup({Key? key, required this.audioUrl}) : super(key: key);
 
   @override
-  State<exposicaoDetails> createState() => _exposicaoDetails();
+  _AudioPopupState createState() => _AudioPopupState();
 }
 
-class _exposicaoDetails extends State<exposicaoDetails> {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final String collectionName = 'Item';
-  ScrollController? controller;
-  DocumentSnapshot? _lastVisible;
-  late bool _isLoading;
-  List<DocumentSnapshot> _snap = [];
-  List<ItemModel> _data = [];
-  bool? _hasData;
+class _AudioPopupState extends State<AudioPopup> {
+  final AudioPlayer player = AudioPlayer();
+  bool isPlaying = false;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
 
   @override
   void initState() {
-    controller = new ScrollController()..addListener(_scrollListener);
     super.initState();
-    _isLoading = true;
-    _getData();
-  }
 
-  onRefresh() {
-    setState(() {
-      _snap.clear();
-      _data.clear();
-      _isLoading = true;
-      _lastVisible = null;
+    player.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == PlayerState.playing;
+      });
     });
-    _getData();
-  }
 
-  Future<Null> _getData() async {
-    setState(() => _hasData = true);
-    QuerySnapshot data;
-    if (_lastVisible == null)
-      data = await firestore
-          .collection(collectionName)
-          .where('exposicaoId', isEqualTo: 20250212121458)
-          // .orderBy('loves', descending: true)
-          // .limit(5)
-          .get();
-    else
-      data = await firestore
-          .collection(collectionName)
-          .where('exposicaoId', isEqualTo: widget.exposicaoId)
-          // .orderBy('loves', descending: true)
-          // .startAfter([_lastVisible!['loves']])
-          // .limit(5)
-          .get();
+    player.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
 
-    if (data.docs.length > 0) {
-      _lastVisible = data.docs[data.docs.length - 1];
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _snap.addAll(data.docs);
-          _data = _snap.map((e) => ItemModel.fromFirestore(e)).toList();
-        });
-      }
-    } else {
-      if (_lastVisible == null) {
-        setState(() {
-          _isLoading = false;
-          _hasData = false;
-          debugPrint('Nada encontrado');
-        });
-      } else {
-        setState(() {
-          _isLoading = false;
-          _hasData = true;
-          debugPrint('Não há mais itens');
-        });
-      }
-    }
-    return null;
+    player.onPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
   }
 
   @override
   void dispose() {
-    controller!.removeListener(_scrollListener);
+    player.dispose();
     super.dispose();
   }
 
-  void _scrollListener() {
-    if (!_isLoading) {
-      if (controller!.position.pixels == controller!.position.maxScrollExtent) {
-        setState(() => _isLoading = true);
-        _getData();
-      }
+  void togglePlayPause() async {
+    if (isPlaying) {
+      await player.pause();
+    } else {
+      await player.play(UrlSource(
+          'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/audiodescricao%2FElevenLabs_2025-02-25T16_22_35_Chris_pre_s50_sb75_se0_b_m2.mp3?alt=media&token=d86b05a3-141d-4af8-b9ef-986c18f9a0e3'));
     }
   }
 
+  void seekTo(double value) async {
+    await player.seek(Duration(seconds: value.toInt()));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        child: CustomScrollView(
-          controller: controller,
-          slivers: <Widget>[
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              pinned: true,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.keyboard_arrow_left,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-              backgroundColor: widget.color,
-              expandedHeight: 120,
-              flexibleSpace: FlexibleSpaceBar(
-                centerTitle: false,
-                background: Container(
-                  color: widget.color,
-                  height: 120,
-                  width: double.infinity,
-                ),
-                title: Text(
-                  widget.exposicaoId!.toUpperCase(),
-                  style: TextStyle(fontWeight: FontWeight.w700),
-                ),
-                titlePadding: EdgeInsets.only(left: 20, bottom: 15, right: 15),
+    return AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: Icon(
+                isPlaying ? Icons.pause : Icons.play_arrow,
+                size: 40,
               ),
+              onPressed: togglePlayPause,
             ),
-            _hasData == false
-                ? SliverFillRemaining(
-                    child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.30,
-                      ),
-                      EmptyPage(
-                          icon: Feather.clipboard,
-                          message: 'nenhum item encontrado'.tr(),
-                          message1: ''),
-                    ],
-                  ))
-                : SliverPadding(
-                    padding: EdgeInsets.all(15),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          if (index < _data.length) {
-                            return _ListItem(
-                              d: _data[index],
-                              tag: '${_data[index].timestamp}$index',
-                            );
-                          }
-                          return Opacity(
-                            opacity: _isLoading ? 1.0 : 0.0,
-                            child: _lastVisible == null
-                                ? Column(
-                                    children: [
-                                      LoadingCard(
-                                        height: 180,
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      )
-                                    ],
-                                  )
-                                : Center(
-                                    child: SizedBox(
-                                        width: 32.0,
-                                        height: 32.0,
-                                        child:
-                                            new CupertinoActivityIndicator()),
-                                  ),
-                          );
-                        },
-                        childCount: _data.length == 0 ? 5 : _data.length + 1,
-                      ),
-                    ),
-                  )
+            SizedBox(height: 20),
+            Slider(
+              min: 0,
+              max: duration.inSeconds.toDouble(),
+              value: position.inSeconds.toDouble(),
+              onChanged: seekTo,
+            ),
+            Text(
+              '${position.inMinutes}:${(position.inSeconds % 60).toString().padLeft(2, '0')} / '
+              '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+              style: TextStyle(fontSize: 16),
+            ),
           ],
         ),
-        onRefresh: () async => onRefresh(),
       ),
-    );
-  }
-}
-
-class _ListItem extends StatelessWidget {
-  final ItemModel d;
-  final String tag;
-  const _ListItem({Key? key, required this.d, required this.tag})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      child: Container(
-        margin: EdgeInsets.only(top: 5, bottom: 15),
-        child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    height: 180,
-                    width: MediaQuery.of(context).size.width,
-                    child: Hero(
-                      tag: tag,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(5),
-                              topRight: Radius.circular(5)),
-                          child: CustomCacheImage(imageUrl: d.imagem)),
-                    )),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        d.titulo!,
-                        maxLines: 1,
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Feather.map_pin,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Expanded(
-                            child: Text(
-                              d.titulo!,
-                              maxLines: 1,
-                              style: TextStyle(
-                                  fontSize: 14, color: Colors.grey[700]),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(
-                            CupertinoIcons.time,
-                            size: 16,
-                            color: Colors.grey[700],
-                          ),
-                          SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            d.date!,
-                            style: TextStyle(
-                                fontSize: 13, color: Colors.grey[700]),
-                          ),
-                          Spacer(),
-                          Icon(
-                            LineIcons.heart,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
-                          // SizedBox(
-                          //   width: 3,
-                          // ),
-                          // Text(
-                          //   d.loves.toString(),
-                          //   style: TextStyle(
-                          //       fontSize: 13, color: Colors.grey[700]),
-                          // ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Icon(
-                            LineIcons.comment,
-                            size: 16,
-                            color: Colors.grey,
-                          ),
-                          // SizedBox(
-                          //   width: 3,
-                          // ),
-                          // Text(
-                          //   d.commentsCount.toString(),
-                          //   style: TextStyle(
-                          //       fontSize: 13, color: Colors.grey[700]),
-                          // ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            )),
-      ),
-      onTap: () => nextScreen(context, ItemDetails(data: d, tag: tag)),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Fechar'),
+        ),
+      ],
     );
   }
 }

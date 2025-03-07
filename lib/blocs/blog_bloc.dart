@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_hour/models/blog.dart';
 
 class BlogBloc extends ChangeNotifier {
-
   DocumentSnapshot? _lastVisible;
   DocumentSnapshot? get lastVisible => _lastVisible;
 
@@ -18,38 +17,29 @@ class BlogBloc extends ChangeNotifier {
   String _popSelection = 'popular';
   String get popupSelection => _popSelection;
 
-
   List<DocumentSnapshot> _snap = [];
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
 
   bool? _hasData;
   bool? get hasData => _hasData;
 
-
-
-
   Future<Null> getData(mounted, String orderBy) async {
     _hasData = true;
     QuerySnapshot rawData;
-    
+
     if (_lastVisible == null)
       rawData = await firestore
           .collection('blogs')
-          .orderBy(orderBy, descending: true)
-          .limit(5)
+          // .orderBy(orderBy, descending: true)
+          // .limit(5)
           .get();
     else
       rawData = await firestore
           .collection('blogs')
-          .orderBy(orderBy, descending: true)
-          .startAfter([_lastVisible![orderBy]])
-          .limit(5)
+          // .orderBy(orderBy, descending: true)
+          // .startAfter([_lastVisible![orderBy]])
+          // .limit(5)
           .get();
-
-
-
-
 
     if (rawData.docs.length > 0) {
       _lastVisible = rawData.docs[rawData.docs.length - 1];
@@ -59,41 +49,31 @@ class BlogBloc extends ChangeNotifier {
         _data = _snap.map((e) => Blog.fromFirestore(e)).toList();
       }
     } else {
-
-      if(_lastVisible == null){
-
+      if (_lastVisible == null) {
         _isLoading = false;
         _hasData = false;
         debugPrint('no items');
-
-      }else{
+      } else {
         _isLoading = false;
         _hasData = true;
         debugPrint('no more items');
       }
-      
     }
 
     notifyListeners();
     return null;
   }
 
-
-  afterPopSelection (value, mounted, orderBy){
+  afterPopSelection(value, mounted, orderBy) {
     _popSelection = value;
     onRefresh(mounted, orderBy);
     notifyListeners();
   }
 
-
-
   setLoading(bool isloading) {
     _isLoading = isloading;
     notifyListeners();
   }
-
-
-
 
   onRefresh(mounted, orderBy) {
     _isLoading = true;
@@ -103,6 +83,4 @@ class BlogBloc extends ChangeNotifier {
     getData(mounted, orderBy);
     notifyListeners();
   }
-
-
 }

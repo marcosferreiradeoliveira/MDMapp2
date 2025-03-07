@@ -63,40 +63,40 @@ class _BlogPageState extends State<BlogPage>
         title: Text('blogs').tr(),
         elevation: 0,
         actions: <Widget>[
-          PopupMenuButton(
-              child: Icon(CupertinoIcons.sort_down),
-              //initialValue: 'view',
-              itemBuilder: (BuildContext context) {
-                return <PopupMenuItem>[
-                  PopupMenuItem(
-                    child: Text('Most Recent'),
-                    value: 'recent',
-                  ),
-                  PopupMenuItem(
-                    child: Text('Most Popular'),
-                    value: 'popular',
-                  )
-                ];
-              },
-              onSelected: (dynamic value) {
-                setState(() {
-                  if (value == 'popular') {
-                    _orderBy = 'loves';
-                  } else {
-                    _orderBy = 'timestamp';
-                  }
-                });
-                bb.afterPopSelection(value, mounted, _orderBy);
-              }),
-          IconButton(
-            icon: Icon(
-              Feather.rotate_cw,
-              size: 22,
-            ),
-            onPressed: () {
-              context.read<BlogBloc>().onRefresh(mounted, _orderBy);
-            },
-          )
+          // PopupMenuButton(
+          //     child: Icon(CupertinoIcons.sort_down),
+          //     //initialValue: 'view',
+          //     itemBuilder: (BuildContext context) {
+          //       return <PopupMenuItem>[
+          //         PopupMenuItem(
+          //           child: Text('Most Recent'),
+          //           value: 'recent',
+          //         ),
+          //         PopupMenuItem(
+          //           child: Text('Most Popular'),
+          //           value: 'popular',
+          //         )
+          //       ];
+          //     },
+          //     onSelected: (dynamic value) {
+          //       setState(() {
+          //         if (value == 'popular') {
+          //           _orderBy = 'loves';
+          //         } else {
+          //           _orderBy = 'timestamp';
+          //         }
+          //       });
+          //       bb.afterPopSelection(value, mounted, _orderBy);
+          //     }),
+          // IconButton(
+          //   icon: Icon(
+          //     Feather.rotate_cw,
+          //     size: 22,
+          //   ),
+          //   onPressed: () {
+          //     context.read<BlogBloc>().onRefresh(mounted, _orderBy);
+          //   },
+          // )
         ],
       ),
       body: RefreshIndicator(

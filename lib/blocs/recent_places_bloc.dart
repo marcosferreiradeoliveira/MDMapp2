@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_hour/models/item.dart';
 
-class RecentPlacesBloc extends ChangeNotifier {
+class ItensBloc extends ChangeNotifier {
   List<ItemModel> _data = [];
   List<ItemModel> get data => _data;
 

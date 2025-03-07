@@ -5,7 +5,7 @@ import 'package:travel_hour/models/exposicao.dart';
 // import 'package:travel_hour/config/config.dart';
 // import 'package:travel_hour/models/item.dart';
 
-class SpecialStateOneBloc extends ChangeNotifier {
+class ExposicaoStateBloc extends ChangeNotifier {
   List<ExposicaoModel> _data = [];
   List<ExposicaoModel> get data => _data;
 

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/blocs/recent_places_bloc.dart';
 import 'package:travel_hour/models/item.dart';
-import 'package:travel_hour/pages/more_places.dart';
+import 'package:travel_hour/pages/mais_itens.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class RecentPlaces extends StatelessWidget {
-  RecentPlaces({Key? key}) : super(key: key);
+class Itens extends StatelessWidget {
+  Itens({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final rb = context.watch<RecentPlacesBloc>();
+    final rb = context.watch<ItensBloc>();
 
     return Column(
       children: <Widget>[
@@ -23,7 +23,7 @@ class RecentPlaces extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(
-                'recently added',
+                'Obras em Destaque',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -36,9 +36,9 @@ class RecentPlaces extends StatelessWidget {
                 icon: Icon(Icons.arrow_forward),
                 onPressed: () => nextScreen(
                     context,
-                    MorePlacesPage(
-                      title: 'recently added',
-                      color: Colors.blueGrey[600],
+                    MaisItensPage(
+                      title: 'Obras em Destaque',
+                      color: Colors.grey[100],
                     )),
               )
             ],

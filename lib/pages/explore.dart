@@ -27,9 +27,9 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
 
   Future reloadData() async {
     Future.delayed(Duration(milliseconds: 0)).then((_) async {
-      await context.read<RecentPlacesBloc>().getData();
+      await context.read<ItensBloc>().getData();
       await context.read<BlogBloc>().getData(mounted, 'loves');
-      await context.read<SpecialStateOneBloc>().getData();
+      await context.read<ExposicaoStateBloc>().getData();
       // .then((value) => context.read<SpecialStateTwoBloc>().getData());
       // .then((value) => context.read<RecommandedPlacesBloc>().getData());
     });
@@ -37,9 +37,9 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
 
   Future _onRefresh() async {
     // context.read<PopularPlacesBloc>().onRefresh(mounted);
-    context.read<RecentPlacesBloc>().onRefresh(mounted);
+    context.read<ItensBloc>().onRefresh(mounted);
     context.read<BlogBloc>().onRefresh(mounted, 'loves');
-    context.read<SpecialStateOneBloc>().onRefresh(mounted);
+    context.read<ExposicaoStateBloc>().onRefresh(mounted);
     // context.read<SpecialStateTwoBloc>().onRefresh(mounted);
     // context.read<RecommandedPlacesBloc>().onRefresh(mounted);
   }
@@ -58,10 +58,10 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                   // Header(),
                   // Featured(),
                   // PopularPlaces(),
-                  SpecialStateOne(),
-                  RecentPlaces(),
+                  ExposicaoState(),
+                  Itens(),
                   RecentBlogs()
-                  // SpecialStateOne(),
+                  // ExposicaoState(),
                   // SpecialStateTwo(),
                   // RecommendedPlaces()
                 ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/blocs/blog_bloc.dart';
 // import 'package:travel_hour/models/item.dart';
-import 'package:travel_hour/pages/more_places.dart';
+import 'package:travel_hour/pages/mais_itens.dart';
 // import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
@@ -34,15 +34,15 @@ class RecentBlogs extends StatelessWidget {
                     letterSpacing: -0.6),
               ).tr(),
               Spacer(),
-              IconButton(
-                icon: Icon(Icons.arrow_forward),
-                onPressed: () => nextScreen(
-                    context,
-                    MorePlacesPage(
-                      title: 'recently added',
-                      color: Colors.blueGrey[600],
-                    )),
-              )
+              // IconButton(
+              //   icon: Icon(Icons.arrow_forward),
+              //   onPressed: () => nextScreen(
+              //       context,
+              //       RecentBlogs(
+              //           // title: 'recently added',
+              //           // color: Colors.blueGrey[600],
+              //           )),
+              // )
             ],
           ),
         ),

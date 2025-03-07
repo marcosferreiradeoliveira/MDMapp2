@@ -103,8 +103,8 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.account_circle, size: 70, color: Colors.white),
-                    SizedBox(height: 10),
+                    // Icon(Icons.account_circle, size: 70, color: Colors.white),
+                    // SizedBox(height: 10),
                     Text(
                       "Menu",
                       style: TextStyle(fontSize: 20, color: Colors.white),

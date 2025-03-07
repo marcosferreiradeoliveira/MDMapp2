@@ -39,9 +39,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<BlogBloc>(
           create: (context) => BlogBloc(),
         ),
-        ChangeNotifierProvider<SignInBloc>(
-          create: (context) => SignInBloc(),
-        ),
+        // ChangeNotifierProvider<SignInBloc>(
+        //   create: (context) => SignInBloc(),
+        // ),
         // ChangeNotifierProvider<CommentsBloc>(
         //   create: (context) => CommentsBloc(),
         // ),
@@ -51,8 +51,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<PopularPlacesBloc>(
           create: (context) => PopularPlacesBloc(),
         ),
-        ChangeNotifierProvider<RecentPlacesBloc>(
-          create: (context) => RecentPlacesBloc(),
+        ChangeNotifierProvider<ItensBloc>(
+          create: (context) => ItensBloc(),
         ),
         // ChangeNotifierProvider<RecommandedPlacesBloc>(
         //   create: (context) => RecommandedPlacesBloc(),
@@ -64,13 +64,13 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<NotificationBloc>(
             create: (context) => NotificationBloc()),
         ChangeNotifierProvider<StateBloc>(create: (context) => StateBloc()),
-        ChangeNotifierProvider<SpecialStateOneBloc>(
-            create: (context) => SpecialStateOneBloc()),
+        ChangeNotifierProvider<ExposicaoStateBloc>(
+            create: (context) => ExposicaoStateBloc()),
         ChangeNotifierProvider<SpecialStateTwoBloc>(
             create: (context) => SpecialStateTwoBloc()),
         ChangeNotifierProvider<OtherPlacesBloc>(
             create: (context) => OtherPlacesBloc()),
-        ChangeNotifierProvider<AdsBloc>(create: (context) => AdsBloc()),
+        // ChangeNotifierProvider<AdsBloc>(create: (context) => AdsBloc()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -78,6 +78,7 @@ class _MyAppState extends State<MyApp> {
           localizationsDelegates: context.localizationDelegates,
           locale: context.locale,
           navigatorObservers: [firebaseObserver],
+          title: 'Museu das Mulheres',
           theme: ThemeData(
             useMaterial3: false,
             primarySwatch: Colors.blue,
