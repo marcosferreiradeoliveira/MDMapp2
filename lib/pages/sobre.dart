@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 // import 'package:travel_hour/widgets/love_count.dart';
 // import 'package:travel_hour/widgets/love_icon.dart';
-import 'package:travel_hour/widgets/other_places.dart';
 // import 'package:provider/provider.dart';
 // import 'package:travel_hour/widgets/todo.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/blocs/recent_places_bloc.dart';
+import 'package:travel_hour/blocs/itens_bloc.dart';
 // import 'package:travel_hour/blocs/recommanded_places_bloc.dart';
 // import 'package:travel_hour/blocs/sign_in_bloc.dart';
 import 'package:travel_hour/config/config.dart';
@@ -22,26 +22,35 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    reloadData();
-  }
-
-  Future reloadData() async {
-    Future.delayed(Duration(milliseconds: 0)).then((_) async {
-      await context.read<ItensBloc>().getData();
-      await context.read<BlogBloc>().getData(mounted, 'loves');
-      await context.read<ExposicaoStateBloc>().getData();
-      // .then((value) => context.read<SpecialStateTwoBloc>().getData());
-      // .then((value) => context.read<RecommandedPlacesBloc>().getData());
+    Future.delayed(Duration.zero, () {
+      reloadData();
     });
   }
 
+  Future reloadData() async {
+    if (!mounted) return;
+
+    final itensBloc = Provider.of<ItensBloc>(context, listen: false);
+    final blogBloc = Provider.of<BlogBloc>(context, listen: false);
+    final exposicaoBloc =
+        Provider.of<ExposicaoStateBloc>(context, listen: false);
+
+    await itensBloc.getData(mounted, 'timestamp');
+    await blogBloc.getData(mounted, 'loves');
+    await exposicaoBloc.getData();
+  }
+
   Future _onRefresh() async {
-    // context.read<PopularPlacesBloc>().onRefresh(mounted);
-    context.read<ItensBloc>().onRefresh(mounted);
-    context.read<BlogBloc>().onRefresh(mounted, 'loves');
-    context.read<ExposicaoStateBloc>().onRefresh(mounted);
-    // context.read<SpecialStateTwoBloc>().onRefresh(mounted);
-    // context.read<RecommandedPlacesBloc>().onRefresh(mounted);
+    if (!mounted) return;
+
+    final itensBloc = Provider.of<ItensBloc>(context, listen: false);
+    final blogBloc = Provider.of<BlogBloc>(context, listen: false);
+    final exposicaoBloc =
+        Provider.of<ExposicaoStateBloc>(context, listen: false);
+
+    await itensBloc.onRefresh(mounted);
+    await blogBloc.onRefresh(mounted, 'loves');
+    await exposicaoBloc.onRefresh(mounted);
   }
 
   @override
@@ -51,7 +60,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: RefreshIndicator(
-            onRefresh: () async => _onRefresh(),
+            onRefresh: _onRefresh,
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -59,7 +68,7 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                   // Featured(),
                   // PopularPlaces(),
                   ExposicaoState(),
-                  Itens(),
+                  RecentItens(),
                   RecentBlogs()
                   // ExposicaoState(),
                   // SpecialStateTwo(),

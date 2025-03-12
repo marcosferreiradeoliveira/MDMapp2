@@ -1,0 +1,25 @@
+{
+    "home": {
+        "title": "Museu das Mulheres",
+        "menu": "Menu"
+    },
+    "menu": {
+        "home": "Início",
+        "exhibitions": "Exposições",
+        "news": "Novidades",
+        "tickets": "Ingressos",
+        "schedule": "Programação",
+        "about": "Sobre",
+        "contact": "Contato",
+        "language": "Inglês / Português"
+    },
+    "sections": {
+        "novidades": "Novidades",
+        "itens_recentes": "Itens Recentes",
+        "exposicoes": "Exposições"
+    },
+    "common": {
+        "no_internet": "Sem conexão com a internet",
+        "loading": "Carregando..."
+    }
+} 

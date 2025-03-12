@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_icons/flutter_icons.dart ';
-import 'package:travel_hour/blocs/notification_bloc.dart';
+// import 'package:travel_hour/blocs/notification_bloc.dart';
 import 'package:travel_hour/pages/blogs.dart';
 import 'package:travel_hour/pages/explore.dart';
 import 'package:provider/provider.dart';
@@ -27,18 +27,28 @@ class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
 
   final List<Map<String, dynamic>> menuItems = [
-    {"icon": Icons.home, "title": "Home", "page": Explore()},
-    {"icon": Icons.grid_view, "title": "Exposições", "page": ExposicoesPage()},
-    {"icon": Icons.article, "title": "Novidades", "page": BlogPage()},
-    {"icon": Icons.airplane_ticket, "title": "Ingressos", "page": Ingressos()},
+    {"icon": Icons.home, "title": "menu.home", "page": Explore()},
+    {
+      "icon": Icons.grid_view,
+      "title": "menu.exhibitions",
+      "page": ExposicoesPage()
+    },
+    {"icon": Icons.article, "title": "menu.news", "page": BlogPage()},
+    {
+      "icon": Icons.airplane_ticket,
+      "title": "menu.tickets",
+      "page": Ingressos()
+    },
     {
       "icon": Icons.calendar_month_outlined,
-      "title": "Programação",
+      "title": "menu.schedule",
       "page": Programacao()
     },
-    {"icon": Icons.album_outlined, "title": "Sobre", "page": Sobre()},
-    {"icon": Icons.contact_mail, "title": "Contato", "page": Contato()},
+    {"icon": Icons.album_outlined, "title": "menu.about", "page": Sobre()},
+    {"icon": Icons.contact_mail, "title": "menu.contact", "page": Contato()},
   ];
+
+  final languageSelector = {"icon": Icons.language, "title": "menu.language"};
 
   void onTabTapped(int index) {
     setState(() => _currentIndex = index);
@@ -46,16 +56,28 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context); // Fecha o drawer após a navegação
   }
 
-  Future _initNotifications() async {
-    await NotificationService()
-        .initFirebasePushNotification(context)
-        .then((value) => context.read<NotificationBloc>().checkPermission());
-  }
+  // Future _initNotifications() async {
+  //   try {
+  //     if (!mounted) return;
+  //     await NotificationService()
+  //         .initFirebasePushNotification(context)
+  //         .then((value) {
+  //       if (mounted) {
+  //         context.read<NotificationBloc>().checkPermission();
+  //       }
+  //     }).catchError((e) {
+  //       debugPrint('Error initializing notifications: $e');
+  //       // Continue com a execução mesmo se houver erro nas notificações
+  //     });
+  //   } catch (e) {
+  //     debugPrint('Error in _initNotifications: $e');
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    _initNotifications();
+    // _initNotifications();
     AppService().checkInternet().then((hasInternet) {
       if (hasInternet != null && !hasInternet) {
         openSnacbar(context, 'no internet'.tr());
@@ -89,7 +111,7 @@ class _HomePageState extends State<HomePage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("App Museu das Mulheres"),
+          title: Text("home.title").tr(),
           backgroundColor: Colors.grey,
         ),
         drawer: Drawer(
@@ -106,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                     // Icon(Icons.account_circle, size: 70, color: Colors.white),
                     // SizedBox(height: 10),
                     Text(
-                      "Menu",
+                      "home.menu".tr(),
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ],
@@ -115,18 +137,24 @@ class _HomePageState extends State<HomePage> {
               for (int i = 0; i < menuItems.length; i++)
                 ListTile(
                   leading: Icon(menuItems[i]["icon"]),
-                  title: Text(menuItems[i]["title"]),
+                  title: Text(menuItems[i]["title"]).tr(),
                   selected: _currentIndex == i,
                   onTap: () => onTabTapped(i),
                 ),
-              // Divider(),
-              // ListTile(
-              //   leading: Icon(Icons.exit_to_app),
-              //   title: Text("Sair"),
-              //   onTap: () {
-              //     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              //   },
-              // ),
+              Divider(),
+              ListTile(
+                leading: Icon(languageSelector["icon"] as IconData),
+                title: Text("menu.language").tr(),
+                onTap: () async {
+                  final currentLocale = context.locale.languageCode;
+                  final newLocale = currentLocale == 'en' ? 'pt' : 'en';
+                  await context.setLocale(Locale(newLocale));
+                  if (mounted) {
+                    setState(() {}); // Força atualização da UI
+                  }
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),

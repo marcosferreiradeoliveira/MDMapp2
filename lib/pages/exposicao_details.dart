@@ -1,15 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:travel_hour/pages/item_details.dart';
-import 'package:travel_hour/utils/empty.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
-import 'package:travel_hour/utils/loading_cards.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:travel_hour/widgets/html_body.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:travel_hour/widgets/youtube_player.dart';

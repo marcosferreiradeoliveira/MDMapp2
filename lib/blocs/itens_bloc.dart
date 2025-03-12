@@ -1,18 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:travel_hour/models/blog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travel_hour/models/item.dart';
 
-class BlogBloc extends ChangeNotifier {
+class ItensBloc extends ChangeNotifier {
   DocumentSnapshot? _lastVisible;
   DocumentSnapshot? get lastVisible => _lastVisible;
 
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  List<Blog> _data = [];
-  List<Blog> get data => _data;
+  List<ItemModel> _data = [];
+  List<ItemModel> get data => _data;
 
   String _popSelection = 'popular';
   String get popupSelection => _popSelection;
@@ -23,30 +21,31 @@ class BlogBloc extends ChangeNotifier {
   bool? _hasData;
   bool? get hasData => _hasData;
 
-  Future<Null> getData(mounted, String orderBy) async {
+  Future<Null> getData(mounted, [String orderBy = 'timestamp']) async {
     _hasData = true;
     QuerySnapshot rawData;
 
-    if (_lastVisible == null)
+    if (_lastVisible == null) {
       rawData = await firestore
-          .collection('blogs')
+          .collection('Item')
           .orderBy(orderBy, descending: true)
           .limit(10)
           .get();
-    else
+    } else {
       rawData = await firestore
-          .collection('blogs')
+          .collection('Item')
           .orderBy(orderBy, descending: true)
           .startAfter([_lastVisible![orderBy]])
           .limit(10)
           .get();
+    }
 
     if (rawData.docs.length > 0) {
       _lastVisible = rawData.docs[rawData.docs.length - 1];
       if (mounted) {
         _isLoading = false;
         _snap.addAll(rawData.docs);
-        _data = _snap.map((e) => Blog.fromFirestore(e)).toList();
+        _data = _snap.map((e) => ItemModel.fromFirestore(e)).toList();
       }
     } else {
       if (_lastVisible == null) {
@@ -64,7 +63,7 @@ class BlogBloc extends ChangeNotifier {
     return null;
   }
 
-  afterPopSelection(value, mounted, orderBy) {
+  afterPopSelection(value, mounted, [String orderBy = 'timestamp']) {
     _popSelection = value;
     onRefresh(mounted, orderBy);
     notifyListeners();
@@ -75,7 +74,7 @@ class BlogBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  onRefresh(mounted, orderBy) {
+  onRefresh(mounted, [String orderBy = 'timestamp']) {
     _isLoading = true;
     _snap.clear();
     _data.clear();
@@ -84,12 +83,12 @@ class BlogBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadMore(String orderBy) async {
+  Future<void> loadMore([String orderBy = 'timestamp']) async {
     try {
       if (_data.isEmpty || _lastVisible == null) return;
 
       QuerySnapshot rawData = await firestore
-          .collection('blogs')
+          .collection('Item')
           .orderBy(orderBy, descending: true)
           .startAfter([_lastVisible![orderBy]])
           .limit(10)
@@ -98,7 +97,7 @@ class BlogBloc extends ChangeNotifier {
       if (rawData.docs.length > 0) {
         _lastVisible = rawData.docs[rawData.docs.length - 1];
         _snap.addAll(rawData.docs);
-        _data = _snap.map((e) => Blog.fromFirestore(e)).toList();
+        _data = _snap.map((e) => ItemModel.fromFirestore(e)).toList();
         notifyListeners();
       }
     } catch (e) {

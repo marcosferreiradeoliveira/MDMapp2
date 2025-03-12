@@ -6,14 +6,12 @@ import '../utils/next_screen.dart';
 import '../utils/notification_dialog.dart';
 
 class NotificationService {
-
-
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   static const String fcmSubcriptionTopticforAll = 'all';
 
-
-  Future _handleNotificationPermissaion () async {
-    NotificationSettings settings = await _fcm.requestPermission(
+  Future<void> initFirebasePushNotification(BuildContext context) async {
+    try {
+      NotificationSettings settings = await _fcm.requestPermission(
         alert: true,
         announcement: false,
         badge: true,
@@ -22,60 +20,61 @@ class NotificationService {
         provisional: false,
         sound: true,
       );
+
       if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('User granted permission');
-      } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+
+        // Configura handlers de mensagem
+        FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+          debugPrint('Got a message whilst in the foreground!');
+          if (message.notification != null) {
+            debugPrint('Notification: ${message.notification?.title}');
+          }
+        });
+
+        FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          debugPrint('Message clicked!');
+          if (message.notification != null) {
+            // Implementar navegação aqui se necessário
+          }
+        });
+      } else if (settings.authorizationStatus ==
+          AuthorizationStatus.provisional) {
         debugPrint('User granted provisional permission');
       } else {
-        debugPrint('User declined or has not accepted permission');
+        debugPrint('User declined permission');
       }
-  }
-
-
-
-
-
-  Future initFirebasePushNotification(context) async {
-    await _handleNotificationPermissaion();
-    String? token = await _fcm.getToken();
-    debugPrint('User FCM Token : $token}');
-
-    RemoteMessage? initialMessage = await _fcm.getInitialMessage();
-
-    debugPrint('inittal message : $initialMessage');
-    if (initialMessage != null) {
-      nextScreen(context, NotificationsPage());
+    } catch (e) {
+      debugPrint('Error initializing notifications: $e');
     }
-    
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      debugPrint("onMessage: $message");
-      showinAppDialog(context, message.notification!.title, message.notification!.body);
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      nextScreen(context, NotificationsPage());
-    });
   }
 
-  Future<bool?> checkingPermisson ()async{
-    bool? accepted;
-    await _fcm.getNotificationSettings().then((NotificationSettings settings)async{
-      if(settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional){
-        accepted = true;
-      }else{
-        accepted = false;
-      }
-    });
-    return accepted;
+  Future<bool?> checkingPermisson() async {
+    try {
+      NotificationSettings settings = await _fcm.getNotificationSettings();
+      return settings.authorizationStatus == AuthorizationStatus.authorized ||
+          settings.authorizationStatus == AuthorizationStatus.provisional;
+    } catch (e) {
+      debugPrint('Error checking permission: $e');
+      return false;
+    }
   }
 
-  Future subscribe ()async{
-    await _fcm.subscribeToTopic(fcmSubcriptionTopticforAll);
+  Future<void> subscribe() async {
+    try {
+      await _fcm.subscribeToTopic(fcmSubcriptionTopticforAll);
+      debugPrint('Subscribed to notifications');
+    } catch (e) {
+      debugPrint('Error subscribing to notifications: $e');
+    }
   }
 
-  Future unsubscribe ()async{
-    await _fcm.unsubscribeFromTopic(fcmSubcriptionTopticforAll);
+  Future<void> unsubscribe() async {
+    try {
+      await _fcm.unsubscribeFromTopic(fcmSubcriptionTopticforAll);
+      debugPrint('Unsubscribed from notifications');
+    } catch (e) {
+      debugPrint('Error unsubscribing from notifications: $e');
+    }
   }
-
-
 }

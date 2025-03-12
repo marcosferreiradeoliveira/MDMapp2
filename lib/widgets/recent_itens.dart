@@ -1,74 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travel_hour/blocs/recent_places_bloc.dart';
-import 'package:travel_hour/models/item.dart';
-import 'package:travel_hour/pages/mais_itens.dart';
-import 'package:travel_hour/pages/item_details.dart';
+import 'package:travel_hour/blocs/itens_bloc.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class Itens extends StatelessWidget {
-  Itens({Key? key}) : super(key: key);
+class RecentItens extends StatelessWidget {
+  const RecentItens({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final rb = context.watch<ItensBloc>();
+    return Consumer<ItensBloc>(
+      builder: (context, itensBloc, child) {
+        return Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(left: 15, top: 20, right: 10),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    'itens_recentes',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[900],
+                      wordSpacing: 1,
+                      letterSpacing: -0.6,
+                    ),
+                  ).tr(),
+                  Spacer(),
+                ],
+              ),
+            ),
+            Container(
+              height: 245,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: itensBloc.data.isEmpty ? 3 : itensBloc.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  if (itensBloc.data.isEmpty) return LoadingPopularPlacesCard();
 
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(left: 15, top: 20, right: 10),
-          child: Row(
-            children: <Widget>[
-              Text(
-                'Obras em Destaque',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[900],
-                    wordSpacing: 1,
-                    letterSpacing: -0.6),
-              ).tr(),
-              Spacer(),
-              IconButton(
-                icon: Icon(Icons.arrow_forward),
-                onPressed: () => nextScreen(
-                    context,
-                    MaisItensPage(
-                      title: 'Obras em Destaque',
-                      color: Colors.grey[100],
-                    )),
-              )
-            ],
-          ),
-        ),
-        Container(
-          height: 245,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            padding: EdgeInsets.only(left: 15, right: 15),
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: rb.data.isEmpty ? 2 : rb.data.length,
-            itemBuilder: (BuildContext context, int index) {
-              if (rb.data.isEmpty) return LoadingPopularPlacesCard();
-
-              final item = rb.data[index]; // Evita passar valores null
-
-              return _ItemList(d: item);
-            },
-          ),
-        )
-      ],
+                  final item = itensBloc.data[index];
+                  return _ItemCard(data: item);
+                },
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
 
-class _ItemList extends StatelessWidget {
-  final ItemModel d;
-  const _ItemList({Key? key, required this.d}) : super(key: key);
+class _ItemCard extends StatelessWidget {
+  final dynamic data;
+  const _ItemCard({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,17 +71,13 @@ class _ItemList extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: ClipRRect(
-          // Clip para bordas arredondadas
           borderRadius: BorderRadius.circular(10),
           child: Stack(
             children: [
-              // Imagem principal
               Hero(
-                tag: 'recent${d.timestamp ?? ''}',
-                child: CustomCacheImage(imageUrl: d.imagem ?? ''),
+                tag: '',
+                child: CustomCacheImage(imageUrl: data.imagem ?? ''),
               ),
-
-              // Sombra aplicada diretamente na imagem
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
@@ -106,42 +92,43 @@ class _ItemList extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // Texto do título
               Positioned(
                 bottom: 20,
                 left: 10,
                 right: 10,
-                child: Text(
-                  d.titulo ?? 'Nome não disponível',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-
-              // Ícone superior direito (se necessário)
-              Positioned(
-                top: 15,
-                right: 15,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.grey[600]!.withOpacity(0.5),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.titulo ?? 'Nome não disponível',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      data.descricao ?? '',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
         ),
       ),
-      onTap: () => nextScreen(
-          context, ItemDetails(data: d, tag: 'recent${d.timestamp ?? ''}')),
+      onTap: () {
+        // Implemente a navegação para os detalhes do item aqui
+      },
     );
   }
 }
