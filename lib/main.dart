@@ -7,9 +7,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/blocs/blog_bloc.dart';
-import 'package:travel_hour/blocs/itens_bloc.dart';
-import 'package:travel_hour/blocs/sp_state_one.dart';
-import 'package:travel_hour/pages/home.dart';
+import 'package:travel_hour/blocs/item_bloc.dart';
+import 'package:travel_hour/blocs/state_bloc.dart';
+import 'package:travel_hour/pages/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,62 +36,51 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: [Locale('pt'), Locale('en')],
+      supportedLocales: [Locale('en'), Locale('pt')],
       path: 'assets/translations',
       fallbackLocale: Locale('pt'),
-      startLocale: Locale('pt'),
       child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    initialization();
-  }
-
-  void initialization() async {
-    await Future.delayed(const Duration(seconds: 1));
-    FlutterNativeSplash.remove();
-  }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ItensBloc>(
-          create: (context) => ItensBloc(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<BlogBloc>(
-          create: (context) => BlogBloc(),
-          lazy: false,
-        ),
-        ChangeNotifierProvider<ExposicaoStateBloc>(
-          create: (context) => ExposicaoStateBloc(),
-          lazy: false,
-        ),
+        ChangeNotifierProvider<BlogBloc>(create: (context) => BlogBloc()),
+        ChangeNotifierProvider<ItemBloc>(create: (context) => ItemBloc()),
+        ChangeNotifierProvider<StateBloc>(create: (context) => StateBloc()),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
         locale: context.locale,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.grey,
-          primaryColor: Colors.white,
-          scaffoldBackgroundColor: Colors.white,
+          primarySwatch: Colors.blue,
+          primaryColor: Colors.blueAccent,
+          iconTheme: IconThemeData(color: Colors.grey[900]),
+          fontFamily: 'Manrope',
+          scaffoldBackgroundColor: Colors.grey[100],
+          appBarTheme: AppBarTheme(
+            color: Colors.white,
+            elevation: 0,
+            iconTheme: IconThemeData(
+              color: Colors.grey[900],
+            ),
+            titleTextStyle: TextStyle(
+              color: Colors.grey[900],
+              fontFamily: 'Manrope',
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
-        home: HomePage(),
+        home: SplashScreen(),
       ),
     );
   }

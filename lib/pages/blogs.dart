@@ -183,7 +183,9 @@ class _ItemList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      d.title!,
+                      context.locale.languageCode == 'en'
+                          ? (d.title_en ?? d.title!)
+                          : d.title!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style:
@@ -192,7 +194,12 @@ class _ItemList extends StatelessWidget {
                     SizedBox(
                       height: 5,
                     ),
-                    Text(AppService.getNormalText(d.description.toString()),
+                    Text(
+                        context.locale.languageCode == 'en'
+                            ? AppService.getNormalText(
+                                (d.description_en ?? d.description).toString())
+                            : AppService.getNormalText(
+                                d.description.toString()),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(

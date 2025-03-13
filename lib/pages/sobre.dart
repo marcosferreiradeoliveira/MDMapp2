@@ -12,6 +12,7 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 // import 'package:travel_hour/widgets/love_icon.dart';
 // import 'package:provider/provider.dart';
 // import 'package:travel_hour/widgets/todo.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Sobre extends StatefulWidget {
   // final ItemModel? data;
@@ -83,20 +84,24 @@ class _SobreState extends State {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Sobre',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: -0.6,
-                            wordSpacing: 1,
-                            color: Colors.grey[800])),
+                    Text(
+                      context.locale.languageCode == 'en' ? 'About' : 'Sobre',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.6,
+                        wordSpacing: 1,
+                        color: Colors.grey[800],
+                      ),
+                    ),
                     Container(
                       margin: EdgeInsets.only(top: 8, bottom: 8),
                       height: 3,
                       width: 150,
                       decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(40)),
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(40),
+                      ),
                     ),
                   ],
                 ),
@@ -108,7 +113,9 @@ class _SobreState extends State {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'O Museu das Mulheres, Museu DAS, é o primeiro museu brasileiro dedicado às mulheres. Museu privado com finalidade pública, social e cultural. Fundado em 10 fevereiro de 2022, o museu nasceu da vontade de reconhecer o valor da produção de arte de mulheres no Brasil e no mundo. Para tanto, almeja ser um lugar de valorização, diálogo, união, amorosidade, equidade, acolhimento, cultura da paz entre mulheres e demais segmentos da sociedade que quiserem somar forças para promoção do avanço de mulheres adultas, jovens e crianças.',
+                      context.locale.languageCode == 'en'
+                          ? 'The Women\'s Museum, Museum DAS, is the first Brazilian museum dedicated to women. It is a private museum with public, social, and cultural purposes. Founded on February 10, 2022, the museum was born from the desire to recognize the value of women\'s art production in Brazil and worldwide. Therefore, it aims to be a place of appreciation, dialogue, unity, love, equity, welcoming, and peace culture between women and other segments of society who want to join forces to promote the advancement of adult women, young women, and children.'
+                          : 'O Museu das Mulheres, Museu DAS, é o primeiro museu brasileiro dedicado às mulheres. Museu privado com finalidade pública, social e cultural. Fundado em 10 fevereiro de 2022, o museu nasceu da vontade de reconhecer o valor da produção de arte de mulheres no Brasil e no mundo. Para tanto, almeja ser um lugar de valorização, diálogo, união, amorosidade, equidade, acolhimento, cultura da paz entre mulheres e demais segmentos da sociedade que quiserem somar forças para promoção do avanço de mulheres adultas, jovens e crianças.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[800],

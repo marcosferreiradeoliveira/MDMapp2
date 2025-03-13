@@ -144,13 +144,15 @@ class _HomePageState extends State<HomePage> {
               Divider(),
               ListTile(
                 leading: Icon(languageSelector["icon"] as IconData),
-                title: Text("menu.language").tr(),
+                title: Text(context.locale.languageCode == 'en'
+                    ? 'Português'
+                    : 'English'),
                 onTap: () async {
                   final currentLocale = context.locale.languageCode;
                   final newLocale = currentLocale == 'en' ? 'pt' : 'en';
                   await context.setLocale(Locale(newLocale));
                   if (mounted) {
-                    setState(() {}); // Força atualização da UI
+                    setState(() {});
                   }
                   Navigator.pop(context);
                 },

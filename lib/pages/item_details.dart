@@ -20,6 +20,7 @@ import '../widgets/html_body.dart';
 // import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:travel_hour/widgets/youtube_player.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ItemDetails extends StatefulWidget {
   final ItemModel? data;
@@ -172,7 +173,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                   //         }),
                   //   ],
                   // ),
-                  Text(widget.data!.titulo!,
+                  Text(
+                      context.locale.languageCode == 'en'
+                          ? (widget.data!.titulo_en ?? widget.data!.titulo!)
+                          : widget.data!.titulo!,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -225,7 +229,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                         backgroundColor:
                             const Color.fromARGB(255, 215, 215, 215),
                         foregroundColor: Colors.black),
-                    child: Text('Libras'),
+                    child: Text('libras'.tr()),
                   ),
                   SizedBox(width: 10),
                   ElevatedButton(
@@ -236,7 +240,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                         backgroundColor:
                             const Color.fromARGB(255, 215, 215, 215),
                         foregroundColor: Colors.black),
-                    child: Text('Áudiodescrição'),
+                    child: Text('audiodescricao'.tr()),
                   ),
                 ],
               ),
@@ -248,7 +252,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   HtmlBodyWidget(
-                    content: widget.data!.descricao.toString(),
+                    content: context.locale.languageCode == 'en'
+                        ? (widget.data!.descricao_en ?? widget.data!.descricao!)
+                            .toString()
+                        : widget.data!.descricao.toString(),
                     isIframeVideoEnabled: true,
                     isVideoEnabled: true,
                     isimageEnabled: true,
@@ -261,13 +268,13 @@ class _ItemDetailsState extends State<ItemDetails> {
             //   padding: EdgeInsets.all(20),
             //   child: TodoWidget(placeData: widget.data),
             // ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, right: 0, bottom: 40),
-              child: OtherPlaces(
-                stateName: widget.data!.exposicaoId,
-                timestamp: widget.data!.timestamp,
-              ),
-            )
+            // Padding(
+            //   padding: EdgeInsets.only(left: 20, right: 0, bottom: 40),
+            //   child: OtherPlaces(
+            //     stateName: widget.data!.exposicaoId,
+            //     timestamp: widget.data!.timestamp,
+            //   ),
+            // )
           ],
         ),
       ),

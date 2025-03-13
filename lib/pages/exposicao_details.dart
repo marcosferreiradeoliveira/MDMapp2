@@ -9,40 +9,41 @@ import 'package:travel_hour/widgets/html_body.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:travel_hour/widgets/youtube_player.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 final player = AudioPlayer();
 
 class ExposicaoDetails extends StatefulWidget {
-  final String? descricao;
-  final String? descricao_en;
-  final String? name;
-  final String? curador;
-  final String? thumbnail;
-  final String? timestamp;
+  final String? titulo;
+  final String? titulo_en;
   final String? subtitulo;
   final String? subtitulo_en;
-  final String? url_libras;
+  final String? descricao;
+  final String? descricao_en;
   final String? exposicaoId;
+  final String? curador;
+  final String? url_libras;
   final String? url_audiodescricao;
-  final DateTime? data_inicio;
-  final DateTime? data_fim;
+  final Timestamp? data_inicio;
+  final Timestamp? data_fim;
+  final String? thumbnail;
   final Color? color;
 
   const ExposicaoDetails({
     Key? key,
-    this.name,
-    this.thumbnail,
-    this.descricao,
-    this.descricao_en,
-    this.timestamp,
-    this.curador,
+    this.titulo,
+    this.titulo_en,
     this.subtitulo,
     this.subtitulo_en,
-    this.url_libras,
+    this.descricao,
+    this.descricao_en,
     this.exposicaoId,
+    this.curador,
+    this.url_libras,
     this.url_audiodescricao,
     this.data_inicio,
     this.data_fim,
+    this.thumbnail,
     this.color,
   }) : super(key: key);
 
@@ -92,7 +93,7 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Exposições'),
+        title: Text('exposicoes'.tr()),
         backgroundColor: Colors.grey[200],
       ),
       body: SingleChildScrollView(
@@ -108,82 +109,93 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                         tag: widget.color!,
                         child: _slidableImages(),
                       ),
-                Positioned(
-                  top: 20,
-                  left: 15,
-                  child: SafeArea(
-                    child: CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).primaryColor.withOpacity(0.9),
-                      child: IconButton(
-                        icon: Icon(
-                          LineIcons.arrowLeft,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _showYoutubePopup(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 215, 215, 215),
-                      foregroundColor: Colors.black),
-                  child: Text('Libras'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    _showAudioPopup(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 215, 215, 215),
-                      foregroundColor: Colors.black),
-                  child: Text('Áudiodescrição'),
-                ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20, bottom: 8, left: 20, right: 20),
+                  top: 15, bottom: 8, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(widget.name!,
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                          letterSpacing: -0.6,
-                          wordSpacing: 1,
-                          color: Colors.grey[800])),
+                  Text(
+                    context.locale.languageCode == 'en'
+                        ? (widget.titulo_en ?? widget.titulo!)
+                        : widget.titulo!,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: -0.6,
+                      wordSpacing: 1,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  if (context.locale.languageCode == 'en'
+                      ? widget.subtitulo_en != null
+                      : widget.subtitulo != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        context.locale.languageCode == 'en'
+                            ? widget.subtitulo_en!
+                            : widget.subtitulo!,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          _showYoutubePopup(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 215, 215, 215),
+                          foregroundColor: Colors.black,
+                        ),
+                        icon: Icon(Icons.sign_language),
+                        label: Text('libras'.tr()),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          _showAudioPopup(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 215, 215, 215),
+                          foregroundColor: Colors.black,
+                        ),
+                        icon: Icon(Icons.hearing),
+                        label: Text('audiodescricao'.tr()),
+                      ),
+                    ],
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top: 8, bottom: 8),
+                    margin: EdgeInsets.only(top: 15, bottom: 8),
                     height: 3,
                     width: 150,
                     decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(40)),
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(40),
+                    ),
                   ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20, bottom: 8, left: 20, right: 20),
+                  top: 10, bottom: 8, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   HtmlBodyWidget(
-                    content: widget.descricao.toString(),
+                    content: context.locale.languageCode == 'en'
+                        ? (widget.descricao_en ?? widget.descricao).toString()
+                        : widget.descricao.toString(),
                     isIframeVideoEnabled: true,
                     isVideoEnabled: true,
                     isimageEnabled: true,
@@ -192,9 +204,14 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                 ],
               ),
             ),
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1,
+              height: 40,
+            ),
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 8, left: 20, right: 20),
+              padding:
+                  const EdgeInsets.only(top: 0, bottom: 8, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -231,8 +248,14 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                   return Card(
                     margin: EdgeInsets.only(bottom: 15),
                     child: ListTile(
-                      title: Text(item.titulo ?? 'Sem título'),
-                      subtitle: Text(item.descricao ?? 'Sem descrição'),
+                      title: Text(context.locale.languageCode == 'en'
+                          ? (item.titulo_en ?? item.titulo ?? 'No title')
+                          : (item.titulo ?? 'Sem título')),
+                      subtitle: Text(context.locale.languageCode == 'en'
+                          ? (item.descricao_en ??
+                              item.descricao ??
+                              'No description')
+                          : (item.descricao ?? 'Sem descrição')),
                       leading: item.imagem != null
                           ? Image.network(
                               item.imagem!,

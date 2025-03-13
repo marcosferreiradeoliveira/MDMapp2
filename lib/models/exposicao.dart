@@ -1,59 +1,55 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ExposicaoModel {
-  String? name;
+  String? titulo;
   String? titulo_en;
-  String? thumbnail;
-  String? descricao;
-  String? descricao_en;
-  String? timestamp;
-  String? curador;
   String? subtitulo;
   String? subtitulo_en;
-  String? url_libras;
+  String? descricao;
+  String? descricao_en;
   String? exposicaoId;
+  String? curador;
+  String? url_libras;
   String? url_audiodescricao;
-  DateTime? data_inicio;
-  DateTime? data_fim;
+  Timestamp? data_inicio;
+  Timestamp? data_fim;
+  String? timestamp;
+  String? thumbnail;
 
   ExposicaoModel({
-    this.name,
+    this.titulo,
     this.titulo_en,
-    this.thumbnail,
-    this.descricao,
-    this.descricao_en,
-    this.timestamp,
-    this.curador,
     this.subtitulo,
     this.subtitulo_en,
+    this.descricao,
+    this.descricao_en,
+    this.exposicaoId,
+    this.curador,
     this.url_libras,
     this.url_audiodescricao,
     this.data_inicio,
     this.data_fim,
-    this.exposicaoId,
+    this.timestamp,
+    this.thumbnail,
   });
 
   factory ExposicaoModel.fromFirestore(DocumentSnapshot snapshot) {
     Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
     return ExposicaoModel(
-      name: d['name'],
+      titulo: d['titulo'],
       titulo_en: d['titulo_en'],
-      thumbnail: d['thumbnail'],
-      descricao: d['descricao'],
-      descricao_en: d['descricao_en'],
-      timestamp: d['timestamp'],
-      curador: d['curador'],
       subtitulo: d['subtitulo'],
       subtitulo_en: d['subtitulo_en'],
+      descricao: d['descricao'],
+      descricao_en: d['descricao_en'],
+      exposicaoId: d['exposicaoId'],
+      curador: d['curador'],
       url_libras: d['url_libras'],
       url_audiodescricao: d['url_audiodescricao'],
-      data_inicio: (d['data_inicio'] != null)
-          ? (d['data_inicio'] as Timestamp).toDate()
-          : null,
-      data_fim: (d['data_fim'] != null)
-          ? (d['data_fim'] as Timestamp).toDate()
-          : null,
-      exposicaoId: d['exposicaoId'],
+      data_inicio: d['data_inicio'],
+      data_fim: d['data_fim'],
+      timestamp: d['timestamp'],
+      thumbnail: d['thumbnail'],
     );
   }
 }

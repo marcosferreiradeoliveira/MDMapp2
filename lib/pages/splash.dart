@@ -6,94 +6,51 @@ import 'package:travel_hour/pages/sign_in.dart';
 import 'package:travel_hour/pages/home.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
-class SplashPage extends StatefulWidget {
-  SplashPage({Key? key}) : super(key: key);
-
-  _SplashPageState createState() => _SplashPageState();
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin{
-
-  late AnimationController _controller;
-
-
-
-  afterSplash(){
-    final SignInBloc sb = context.read<SignInBloc>();
-    Future.delayed(Duration(milliseconds: 1200)).then((value){
-      sb.isSignedIn == true || sb.guestUser == true 
-      ? gotoHomePage()
-      : gotoSignInPage();
-      
-    });
-  }
-
-
-  gotoHomePage () {
-    final SignInBloc sb = context.read<SignInBloc>();
-    if(sb.isSignedIn == true){ 
-      sb.getDataFromSp();
-    }
-    nextScreenReplace(context, HomePage());
-  }
-
-
-
-
-  gotoSignInPage (){
-    nextScreenReplace(context, SignInPage());
-  }
-
-
-
-
-  
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
+    _navigateToHome();
+  }
+
+  _navigateToHome() async {
+    await Future.delayed(Duration(milliseconds: 2000));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomePage()),
     );
-    _controller.forward();
-    afterSplash();
   }
-
-
-
-
-
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: RotationTransition(
-
-              turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-              child: Image(
-                image: AssetImage(Config().splashIcon),
-                height: 120,
-                width: 120,
-                fit: BoxFit.contain,
-              )
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Logo
+            Container(
+              height: 200,
+              width: 200,
+              child: Image.asset('assets/images/Logo.png'),
             ),
-    ));
+            SizedBox(height: 20),
+            // Loading indicator
+            CircularProgressIndicator(
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

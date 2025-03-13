@@ -15,8 +15,13 @@
     },
     "sections": {
         "novidades": "Novidades",
-        "itens_recentes": "Itens Recentes",
-        "exposicoes": "Exposições"
+        "itens_recentes": "Obras Recentes",
+        "exposicoes": "Exposições",
+        "libras": "Libras",
+        "audiodescrição": "Audiodescrição",
+        "obras": "Obras",
+        "click_to_buy_ticket": "Clique para comprar seu ingresso",
+        "tickets": "Ingressos"
     },
     "common": {
         "no_internet": "Sem conexão com a internet",

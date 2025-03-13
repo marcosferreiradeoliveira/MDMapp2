@@ -117,7 +117,9 @@ class _BlogList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      d.title ?? 'Nome não disponível',
+                      context.locale.languageCode == 'en'
+                          ? (d.title_en ?? d.title ?? 'No title available')
+                          : (d.title ?? 'Nome não disponível'),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -128,8 +130,9 @@ class _BlogList extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      d.description ??
-                          '', // Usando a propriedade description diretamente
+                      context.locale.languageCode == 'en'
+                          ? (d.description_en ?? d.description ?? '')
+                          : (d.description ?? ''),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

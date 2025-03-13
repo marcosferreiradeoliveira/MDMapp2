@@ -9,7 +9,7 @@ import 'package:travel_hour/widgets/recent_itens.dart';
 // import 'package:travel_hour/widgets/recommended_places.dart';
 import 'package:travel_hour/widgets/recent_blogs.dart';
 import 'package:travel_hour/blocs/blog_bloc.dart';
-import 'package:travel_hour/widgets/special_state1.dart';
+import 'package:travel_hour/widgets/exposicao_destaque.dart';
 import 'package:travel_hour/blocs/sp_state_one.dart';
 
 class Explore extends StatefulWidget {

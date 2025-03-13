@@ -14,6 +14,7 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/widgets/other_places.dart';
 // import 'package:provider/provider.dart';
 // import 'package:travel_hour/widgets/todo.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Ingressos extends StatefulWidget {
   // final ItemModel? data;
@@ -86,7 +87,7 @@ class _IngressosState extends State {
                 //     :
                 Hero(
                   tag: 'Ingressos',
-                  child: _slidableImages(),
+                  child: ImageCarousel(),
                 ),
                 // Positioned(
                 //   top: 20,
@@ -151,7 +152,7 @@ class _IngressosState extends State {
                   //         }),
                   //   ],
                   // ),
-                  Text('Ingressos',
+                  Text('tickets'.tr(),
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -192,7 +193,7 @@ class _IngressosState extends State {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20, bottom: 8, left: 20, right: 20),
+                  top: 20, bottom: 40, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -201,9 +202,11 @@ class _IngressosState extends State {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[100],
                       foregroundColor: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     ),
                     child: Text(
-                      'Clique aqui para comprar seu ingresso',
+                      'click_to_buy_ticket'.tr(),
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.black,
@@ -217,43 +220,102 @@ class _IngressosState extends State {
             //   padding: EdgeInsets.all(20),
             //   child: TodoWidget(placeData: widget.data),
             // ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, right: 0, bottom: 40),
-              child: OtherPlaces(
-                stateName: 'widget.data!.exposicaoId',
-                timestamp: 'widget.data!.timestamp',
-              ),
-            )
+            // Padding(
+            //   padding: EdgeInsets.only(left: 20, right: 0, bottom: 40),
+            //   child: OtherPlaces(
+            //     stateName: 'widget.data!.exposicaoId',
+            //     timestamp: 'widget.data!.timestamp',
+            //   ),
+            // )
           ],
         ),
       ),
     );
   }
+}
 
-  Container _slidableImages() {
+class ImageCarousel extends StatefulWidget {
+  @override
+  _ImageCarouselState createState() => _ImageCarouselState();
+}
+
+class _ImageCarouselState extends State<ImageCarousel> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  final List<String> images = [
+    'https://static.wixstatic.com/media/01f721_05e181101ac74cad9380f36e50cf32cc~mv2.jpg/v1/fit/w_2500,h_1330,al_c/01f721_05e181101ac74cad9380f36e50cf32cc~mv2.jpg',
+    'https://visite.museus.gov.br/wp-content/uploads/tainacan-items/14/242116/Expo-Barro-Pele-Pedra-Grafite-Rio-2023-Fonte-Museu-das-Mulheres.jpg',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoPlay();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _startAutoPlay() {
+    Future.delayed(Duration(seconds: 5), () {
+      if (mounted) {
+        final nextPage = (_currentPage + 1) % images.length;
+        _pageController.animateToPage(
+          nextPage,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+        _startAutoPlay();
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
+      height: 320,
       color: Colors.white,
-      child: Container(
-        height: 320,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: AnotherCarousel(
-            dotBgColor: Colors.transparent,
-            showIndicator: true,
-            dotSize: 5,
-            dotSpacing: 15,
-            boxFit: BoxFit.cover,
-            images: [
-              CustomCacheImage(
-                  imageUrl:
-                      'https://static.wixstatic.com/media/01f721_05e181101ac74cad9380f36e50cf32cc~mv2.jpg/v1/fit/w_2500,h_1330,al_c/01f721_05e181101ac74cad9380f36e50cf32cc~mv2.jpg'),
-              CustomCacheImage(
-                  imageUrl:
-                      'https://visite.museus.gov.br/wp-content/uploads/tainacan-items/14/242116/Expo-Barro-Pele-Pedra-Grafite-Rio-2023-Fonte-Museu-das-Mulheres.jpg'),
-              // CustomCacheImage(imageUrl: widget.data!.imageUrl3),
-            ]),
+      child: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page;
+              });
+            },
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return CustomCacheImage(imageUrl: images[index]);
+            },
+          ),
+          Positioned(
+            bottom: 10,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                images.length,
+                (index) => Container(
+                  width: 8,
+                  height: 8,
+                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _currentPage == index
+                        ? Colors.white
+                        : Colors.white.withOpacity(0.5),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

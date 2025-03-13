@@ -12,7 +12,7 @@ import 'package:travel_hour/models/blog.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 // import 'package:travel_hour/widgets/love_count.dart';
 import 'package:provider/provider.dart';
-// import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../blocs/ads_bloc.dart';
 import '../widgets/html_body.dart';
 
@@ -161,7 +161,9 @@ class _BlogDetailsState extends State<BlogDetails> {
                               height: 5,
                             ),
                             Text(
-                              d.title!,
+                              context.locale.languageCode == 'en'
+                                  ? (d.title_en ?? d.title!)
+                                  : d.title!,
                               style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.w900,
@@ -279,7 +281,9 @@ class _BlogDetailsState extends State<BlogDetails> {
                   padding: const EdgeInsets.only(
                       top: 20, bottom: 8, left: 20, right: 20),
                   child: HtmlBodyWidget(
-                    content: d.description.toString(),
+                    content: context.locale.languageCode == 'en'
+                        ? (d.description_en ?? d.description!).toString()
+                        : d.description.toString(),
                     isIframeVideoEnabled: true,
                     isVideoEnabled: true,
                     isimageEnabled: true,

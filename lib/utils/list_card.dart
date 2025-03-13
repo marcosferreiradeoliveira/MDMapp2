@@ -8,15 +8,21 @@ import 'package:travel_hour/models/exposicao.dart';
 import 'package:travel_hour/pages/exposicao_details.dart';
 
 class ListCard extends StatelessWidget {
-  final ExposicaoModel? d;
-  final String tag;
+  final dynamic d;
+  final String? tag;
   final Color? color;
+  final String? titulo;
+  final String? subtitulo;
+  final String? descricao;
 
   const ListCard({
     Key? key,
     required this.d,
     required this.tag,
     required this.color,
+    this.titulo,
+    this.subtitulo,
+    this.descricao,
   }) : super(key: key);
 
   @override
@@ -26,7 +32,6 @@ class ListCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         child: Stack(
           children: <Widget>[
-            // Imagem de fundo
             Container(
               width: MediaQuery.of(context).size.width,
               height: 120,
@@ -34,8 +39,6 @@ class ListCard extends StatelessWidget {
                 imageUrl: d?.thumbnail ?? '',
               ),
             ),
-
-            // Camada de sombra
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
@@ -50,21 +53,34 @@ class ListCard extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Título em branco
             Positioned(
               bottom: 10,
               left: 15,
               right: 15,
-              child: Text(
-                d?.name ?? 'No name',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white, // Garante que o título fique branco
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    titulo ?? 'Sem título',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  if (subtitulo != null && subtitulo!.isNotEmpty)
+                    Text(
+                      subtitulo!,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white70,
+                      ),
+                    ),
+                ],
               ),
             ),
           ],
@@ -73,10 +89,17 @@ class ListCard extends StatelessWidget {
       onTap: () => nextScreen(
         context,
         ExposicaoDetails(
-          exposicaoId: d?.exposicaoId ?? '',
-          descricao_en: d?.descricao_en ?? '',
-          name: d?.name ?? '',
+          titulo: d?.titulo ?? '',
+          titulo_en: d?.titulo_en ?? '',
+          subtitulo: d?.subtitulo ?? '',
+          subtitulo_en: d?.subtitulo_en ?? '',
           descricao: d?.descricao ?? '',
+          descricao_en: d?.descricao_en ?? '',
+          exposicaoId: d?.exposicaoId ?? '',
+          curador: d?.curador ?? '',
+          url_libras: d?.url_libras ?? '',
+          url_audiodescricao: d?.url_audiodescricao ?? '',
+          data_inicio: d?.data_inicio ?? '',
           color: color ?? Colors.grey[200],
         ),
       ),
