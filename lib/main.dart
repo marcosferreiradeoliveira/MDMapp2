@@ -7,7 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/blocs/blog_bloc.dart';
-import 'package:travel_hour/blocs/item_bloc.dart';
+import 'package:travel_hour/blocs/itens_bloc.dart';
 import 'package:travel_hour/blocs/state_bloc.dart';
 import 'package:travel_hour/pages/splash.dart';
 
@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<BlogBloc>(create: (context) => BlogBloc()),
-        ChangeNotifierProvider<ItemBloc>(create: (context) => ItemBloc()),
+        ChangeNotifierProvider<ItensBloc>(create: (context) => ItensBloc()),
         ChangeNotifierProvider<StateBloc>(create: (context) => StateBloc()),
       ],
       child: MaterialApp(
