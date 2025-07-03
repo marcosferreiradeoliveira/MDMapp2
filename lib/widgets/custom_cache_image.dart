@@ -7,15 +7,18 @@ class CustomCacheImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
+    return SizedBox.expand(
+        // <- garante que ocupe tudo do pai
+        child: CachedNetworkImage(
       imageUrl: imageUrl!,
       fit: BoxFit.cover,
-      height: MediaQuery.of(context).size.height,
+      width: double.infinity,
+      height: double.infinity,
       placeholder: (context, url) => Container(color: Colors.grey[300]),
       errorWidget: (context, url, error) => Container(
         color: Colors.grey[300],
         child: Icon(Icons.error),
       ),
-    );
+    ));
   }
 }

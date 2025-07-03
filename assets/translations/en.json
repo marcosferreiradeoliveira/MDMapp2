@@ -11,6 +11,7 @@
     "click_to_buy_ticket" : "Click to buy ticket",
     "tickets" : "Tickets",
 
+    
 
 
 
@@ -118,12 +119,21 @@
         "schedule": "Schedule",
         "about": "About",
         "contact": "Contact",
-        "language": "English / Portuguese"
+        "language": "English / Portuguese",
+        "institucional": "Institutional",
+        "curatorial": "Curatorial",
+        "exposicoes": "Exhibitions"
     },
     "sections": {
         "novidades": "News",
-        "itens_recentes": "Recent Items",
-        "exposicoes": "Exhibitions"
+        "itens_recentes": "Recent Artworks",
+        "exposicoes": "Exhibitions",
+        "exposicao": "Exhibition",
+        "libras": "Libras",
+        "audiodescrição": "Audiodescription",
+        "obras": "Artworks",
+        "click_to_buy_ticket": "Click to buy ticket",
+        "tickets": "Tickets"
     },
     "common": {
         "no_internet": "No internet connection",

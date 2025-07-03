@@ -69,7 +69,8 @@ class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin {
                   // PopularPlaces(),
                   ExposicaoState(),
                   RecentItens(),
-                  RecentBlogs()
+                  RecentBlogs(),
+                  ExposicoesAnterioresSection(),
                   // ExposicaoState(),
                   // SpecialStateTwo(),
                   // RecommendedPlaces()

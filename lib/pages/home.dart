@@ -4,17 +4,17 @@ import 'package:flutter/services.dart';
 // import 'package:travel_hour/blocs/notification_bloc.dart';
 import 'package:travel_hour/pages/blogs.dart';
 import 'package:travel_hour/pages/explore.dart';
-import 'package:provider/provider.dart';
 import 'package:travel_hour/pages/exposicoes.dart';
 import 'package:travel_hour/services/app_service.dart';
 import 'package:travel_hour/utils/snacbar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:travel_hour/pages/sobre.dart';
-import 'package:travel_hour/pages/ingresso.dart';
+import 'package:travel_hour/pages/institucional.dart';
+import 'package:travel_hour/pages/curatorial.dart';
+
 import 'package:travel_hour/pages/contato.dart';
 import 'package:travel_hour/pages/programacao.dart';
 // import '../blocs/ads_bloc.dart';
-import '../services/notification_service.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -29,21 +29,22 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, dynamic>> menuItems = [
     {"icon": Icons.home, "title": "menu.home", "page": Explore()},
     {
+      "icon": Icons.museum_rounded,
+      "title": "menu.institucional",
+      "page": Institucional()
+    },
+    {"icon": Icons.museum, "title": "menu.curatorial", "page": Curatorial()},
+    {
       "icon": Icons.grid_view,
-      "title": "menu.exhibitions",
+      "title": "menu.exposicoes",
       "page": ExposicoesPage()
     },
+    // {
+    //   "icon": Icons.calendar_month_outlined,
+    //   "title": "menu.schedule",
+    //   "page": Programacao()
+    // },
     {"icon": Icons.article, "title": "menu.news", "page": BlogPage()},
-    {
-      "icon": Icons.airplane_ticket,
-      "title": "menu.tickets",
-      "page": Ingressos()
-    },
-    {
-      "icon": Icons.calendar_month_outlined,
-      "title": "menu.schedule",
-      "page": Programacao()
-    },
     {"icon": Icons.album_outlined, "title": "menu.about", "page": Sobre()},
     {"icon": Icons.contact_mail, "title": "menu.contact", "page": Contato()},
   ];
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("home.title").tr(),
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
         ),
         drawer: Drawer(
           child: ListView(
@@ -120,7 +121,7 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  color: Theme.of(context).primaryColor,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                     // SizedBox(height: 10),
                     Text(
                       "home.menu".tr(),
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
                     ),
                   ],
                 ),
@@ -162,7 +163,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: PageView(
           controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           children: menuItems.map((item) => item["page"] as Widget).toList(),
         ),
       ),

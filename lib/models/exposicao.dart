@@ -42,7 +42,7 @@ class ExposicaoModel {
       subtitulo_en: d['subtitulo_en'],
       descricao: d['descricao'],
       descricao_en: d['descricao_en'],
-      exposicaoId: d['exposicaoId'],
+      exposicaoId: snapshot.id, // Use sempre o id do documento
       curador: d['curador'],
       url_libras: d['url_libras'],
       url_audiodescricao: d['url_audiodescricao'],

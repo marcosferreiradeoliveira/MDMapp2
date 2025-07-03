@@ -4,7 +4,6 @@ import 'package:travel_hour/models/item.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
-import 'package:travel_hour/models/exposicao.dart';
 import 'package:travel_hour/pages/exposicao_details.dart';
 
 class ListCard extends StatelessWidget {
@@ -14,6 +13,7 @@ class ListCard extends StatelessWidget {
   final String? titulo;
   final String? subtitulo;
   final String? descricao;
+  final double imageHeight;
 
   const ListCard({
     Key? key,
@@ -23,6 +23,7 @@ class ListCard extends StatelessWidget {
     this.titulo,
     this.subtitulo,
     this.descricao,
+    this.imageHeight = 400,
   }) : super(key: key);
 
   @override
@@ -34,7 +35,7 @@ class ListCard extends StatelessWidget {
           children: <Widget>[
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 120,
+              height: imageHeight,
               child: CustomCacheImage(
                 imageUrl: d?.thumbnail ?? '',
               ),

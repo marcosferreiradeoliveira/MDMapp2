@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:travel_hour/models/item.dart';
 import 'package:travel_hour/pages/item_details.dart';
 import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
+import 'package:travel_hour/widgets/blackbuttonwidget.dart';
+
 import 'package:travel_hour/widgets/html_body.dart';
 import 'package:another_carousel_pro/another_carousel_pro.dart';
 import 'package:travel_hour/widgets/youtube_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final player = AudioPlayer();
 
@@ -78,8 +80,8 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
       builder: (BuildContext context) {
         return AlertDialog(
           content: Container(
-            width: MediaQuery.of(context).size.width * 0.8,
-            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width * 1.2,
+            height: MediaQuery.of(context).size.height * 0.2,
             child: YoutubePlayerDemoApp(
               url: widget.url_libras ?? '',
             ),
@@ -93,8 +95,9 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('exposicoes'.tr()),
+        title: Text('sections.exposicoes'.tr()),
         backgroundColor: Colors.grey[200],
+        leading: BackButtonWidget(), // Usando nosso botão personalizado
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -148,18 +151,18 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          _showYoutubePopup(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 215, 215, 215),
-                          foregroundColor: Colors.black,
-                        ),
-                        icon: Icon(Icons.sign_language),
-                        label: Text('libras'.tr()),
-                      ),
+                      // ElevatedButton.icon(
+                      //   onPressed: () {
+                      //     _showYoutubePopup(context);
+                      //   },
+                      //   style: ElevatedButton.styleFrom(
+                      //     backgroundColor:
+                      //         const Color.fromARGB(255, 215, 215, 215),
+                      //     foregroundColor: Colors.black,
+                      //   ),
+                      //   icon: Icon(Icons.sign_language),
+                      //   label: Text('libras'.tr()),
+                      // ),
                       ElevatedButton.icon(
                         onPressed: () {
                           _showAudioPopup(context);
@@ -170,7 +173,7 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
                           foregroundColor: Colors.black,
                         ),
                         icon: Icon(Icons.hearing),
-                        label: Text('audiodescricao'.tr()),
+                        label: Text('sections.audiodescrição'.tr()),
                       ),
                     ],
                   ),
@@ -209,13 +212,48 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
               thickness: 1,
               height: 40,
             ),
+            Text("Vídeo Institucional"),
+            YoutubePlayerDemoApp(
+              url: "https://youtu.be/oAhFVqhyc7Y?si=T1CthLdqPD2_JB3F",
+            ),
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1,
+              height: 40,
+            ),
+            Text("Vídeo Educativo com Libras"),
+            YoutubePlayerDemoApp(
+              url: "https://youtu.be/pTFFteC6cMs",
+            ),
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1,
+              height: 40,
+            ),
+            ElevatedButton.icon(
+              onPressed: () {
+                launchUrl(Uri.parse(
+                    'https://gyroexperience.com.br/homologacao/03_production/bb_v2b/'));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 215, 215, 215),
+                foregroundColor: Colors.black,
+              ),
+              icon: Icon(Icons.tour_outlined),
+              label: Text("Tour Virtual"),
+            ),
+            Divider(
+              color: Colors.grey[300],
+              thickness: 1,
+              height: 40,
+            ),
             Padding(
               padding:
                   const EdgeInsets.only(top: 0, bottom: 8, left: 20, right: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Obras",
+                  Text("Obras selecionadas",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
@@ -297,7 +335,25 @@ class _ExposicaoDetailsState extends State<ExposicaoDetails> {
             images: [
               CustomCacheImage(
                   imageUrl:
-                      'https://www.aen.pr.gov.br/sites/default/arquivos_restritos/files/imagem/2023-02/exposicao_fora_das_sombras_1._credito_marcello_kawase.jpg'),
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2F250401_Vetores_Vertentes_0149.jpg?alt=media&token=9459deaf-8cb5-47f2-b69f-c5380a6b3915'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22.jpeg?alt=media&token=a61edf03-e76d-4791-988d-75b4972d74fc'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22%20(1).jpeg?alt=media&token=2e6cc59b-20be-47c7-8c1c-4ed3b34a20e5'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22%20(2).jpeg?alt=media&token=acb90aec-8d35-422d-a427-9e8101f1925f'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22%20(3).jpeg?alt=media&token=f47632ad-ecd6-403c-bf7c-74cd382b22fd'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22%20(4).jpeg?alt=media&token=f075157a-f52b-4383-ac88-97d2617d880e'),
+              CustomCacheImage(
+                  imageUrl:
+                      'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/Imagens%2FWhatsApp%20Image%202025-05-02%20at%2015.02.22%20(5).jpeg?alt=media&token=4dfe3466-31d9-4682-a607-f3ae2606bd43'),
             ]),
       ),
     );
@@ -374,8 +430,7 @@ class _AudioPopupState extends State<AudioPopup> {
     if (isPlaying) {
       await player.pause();
     } else {
-      await player.play(UrlSource(
-          'https://firebasestorage.googleapis.com/v0/b/museu-das-mulheres---app.firebasestorage.app/o/audiodescricao%2FElevenLabs_2025-02-25T16_22_35_Chris_pre_s50_sb75_se0_b_m2.mp3?alt=media&token=d86b05a3-141d-4af8-b9ef-986c18f9a0e3'));
+      await player.play(UrlSource(widget.audioUrl));
     }
   }
 

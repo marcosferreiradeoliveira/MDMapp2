@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_icons/flutter_icons.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 // import 'package:travel_hour/blocs/bookmark_bloc.dart';
 import 'package:travel_hour/blocs/sign_in_bloc.dart';
 import 'package:travel_hour/models/blog.dart';
@@ -13,6 +13,8 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 // import 'package:travel_hour/widgets/love_count.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:travel_hour/widgets/blackbuttonwidget.dart';
+
 import '../blocs/ads_bloc.dart';
 import '../widgets/html_body.dart';
 
@@ -55,24 +57,24 @@ class _BlogDetailsState extends State<BlogDetails> {
   // }
 
   handleShare() {
-    final sb = context.read<SignInBloc>();
-    final String _shareTextAndroid =
-        '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
-    final String _shareTextiOS =
-        '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
+    // final sb = context.read<SignInBloc>();
+    // final String _shareTextAndroid =
+    //     '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
+    // final String _shareTextiOS =
+    //     '${widget.blogData!.title}, Check out this app to explore more. App link: https://play.google.com/store/apps/details?id=${sb.packageName}';
 
-    if (Platform.isAndroid) {
-      Share.share(_shareTextAndroid);
-    } else {
-      Share.share(_shareTextiOS);
-    }
+    // if (Platform.isAndroid) {
+    //   Share.share(_shareTextAndroid);
+    // } else {
+    //   Share.share(_shareTextiOS);
+    // }
   }
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 0)).then((value) async {
-      context.read<AdsBloc>().initiateAds();
+      // context.read<AdsBloc>().initiateAds();
     });
   }
 
@@ -84,6 +86,11 @@ class _BlogDetailsState extends State<BlogDetails> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('sections.novidades'.tr()),
+        backgroundColor: Colors.grey[200],
+        leading: BackButtonWidget(), // Usando nosso botão personalizado
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(top: 20, bottom: 20),
@@ -99,20 +106,20 @@ class _BlogDetailsState extends State<BlogDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
-                            Container(
-                              height: 35,
-                              width: 35,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: IconButton(
-                                padding: EdgeInsets.all(0),
-                                icon: Icon(Icons.arrow_back),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ),
+                            // Container(
+                            //   height: 35,
+                            //   width: 35,
+                            //   decoration: BoxDecoration(
+                            //       color: Colors.grey[200],
+                            //       borderRadius: BorderRadius.circular(5)),
+                            //   child: IconButton(
+                            //     padding: EdgeInsets.all(0),
+                            //     icon: Icon(Icons.arrow_back),
+                            //     onPressed: () {
+                            //       Navigator.pop(context);
+                            //     },
+                            //   ),
+                            // ),
                             Spacer(),
                             // Container(
                             //     height: 35,

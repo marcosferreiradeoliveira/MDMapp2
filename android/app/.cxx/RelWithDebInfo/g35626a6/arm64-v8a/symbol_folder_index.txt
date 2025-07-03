@@ -1,0 +1,1 @@
+/Users/marcosferreira/Documents/MDM/MDMapp2/build/app/intermediates/cxx/RelWithDebInfo/g35626a6/obj/arm64-v8a

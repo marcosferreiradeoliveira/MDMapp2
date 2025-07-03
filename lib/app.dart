@@ -1,4 +1,4 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:travel_hour/config/config.dart';
@@ -18,9 +18,9 @@ import 'blocs/sp_state_two.dart';
 import 'blocs/state_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.instance;
-final FirebaseAnalyticsObserver firebaseObserver =
-    FirebaseAnalyticsObserver(analytics: firebaseAnalytics);
+// final FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.instance;
+// final FirebaseAnalyticsObserver firebaseObserver =
+//     FirebaseAnalyticsObserver(analytics: firebaseAnalytics);
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -59,8 +59,8 @@ class _MyAppState extends State<MyApp> {
         //   create: (context) => FeaturedBloc(),
         // ),
         // ChangeNotifierProvider<SearchBloc>(create: (context) => SearchBloc()),
-        ChangeNotifierProvider<NotificationBloc>(
-            create: (context) => NotificationBloc()),
+        // ChangeNotifierProvider<NotificationBloc>(
+        //     create: (context) => NotificationBloc()),
         ChangeNotifierProvider<StateBloc>(create: (context) => StateBloc()),
         ChangeNotifierProvider<ExposicaoStateBloc>(
             create: (context) => ExposicaoStateBloc()),
@@ -75,7 +75,6 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
           locale: context.locale,
-          navigatorObservers: [firebaseObserver],
           title: 'Museu das Mulheres',
           theme: ThemeData(
             useMaterial3: false,

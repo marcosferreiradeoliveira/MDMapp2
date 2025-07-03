@@ -10,9 +10,10 @@ import 'package:travel_hour/models/item.dart';
 // import 'package:travel_hour/widgets/bookmark_icon.dart';
 // import 'package:travel_hour/widgets/comment_count.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
+import 'package:travel_hour/widgets/blackbuttonwidget.dart';
+
 // import 'package:travel_hour/widgets/love_count.dart';
 // import 'package:travel_hour/widgets/love_icon.dart';
-import 'package:travel_hour/widgets/other_places.dart';
 // import 'package:provider/provider.dart';
 // import 'package:travel_hour/widgets/todo.dart';
 import '../widgets/html_body.dart';
@@ -98,6 +99,11 @@ class _ItemDetailsState extends State<ItemDetails> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('sections.exposicoes'.tr()),
+        backgroundColor: Colors.grey[200],
+        leading: BackButtonWidget(), // Usando nosso botão personalizado
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,25 +116,25 @@ class _ItemDetailsState extends State<ItemDetails> {
                         tag: widget.tag!,
                         child: _slidableImages(),
                       ),
-                Positioned(
-                  top: 20,
-                  left: 15,
-                  child: SafeArea(
-                    child: CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).primaryColor.withOpacity(0.9),
-                      child: IconButton(
-                        icon: Icon(
-                          LineIcons.arrowLeft,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 20,
+                //   left: 15,
+                //   child: SafeArea(
+                //     child: CircleAvatar(
+                //       backgroundColor:
+                //           Theme.of(context).primaryColor.withOpacity(0.9),
+                //       child: IconButton(
+                //         icon: Icon(
+                //           LineIcons.arrowLeft,
+                //           color: Colors.white,
+                //         ),
+                //         onPressed: () {
+                //           Navigator.pop(context);
+                //         },
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Padding(
@@ -216,35 +222,35 @@ class _ItemDetailsState extends State<ItemDetails> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, bottom: 8, left: 20, right: 20),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      _showYoutubePopup(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 215, 215, 215),
-                        foregroundColor: Colors.black),
-                    child: Text('libras'.tr()),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () {
-                      _showAudioPopup(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 215, 215, 215),
-                        foregroundColor: Colors.black),
-                    child: Text('audiodescricao'.tr()),
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //       top: 20, bottom: 8, left: 20, right: 20),
+            //   child: Row(
+            //     children: [
+            //       ElevatedButton(
+            //         onPressed: () {
+            //           _showYoutubePopup(context);
+            //         },
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor:
+            //                 const Color.fromARGB(255, 215, 215, 215),
+            //             foregroundColor: Colors.black),
+            //         child: Text('libras'.tr()),
+            //       ),
+            //       SizedBox(width: 10),
+            //       ElevatedButton(
+            //         onPressed: () {
+            //           _showAudioPopup(context);
+            //         },
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor:
+            //                 const Color.fromARGB(255, 215, 215, 215),
+            //             foregroundColor: Colors.black),
+            //         child: Text('audiodescricao'.tr()),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(
                   top: 20, bottom: 8, left: 20, right: 20),

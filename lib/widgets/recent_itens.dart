@@ -6,14 +6,39 @@ import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:travel_hour/pages/item_details.dart';
+import 'package:travel_hour/blocs/sp_state_one.dart';
 
 class RecentItens extends StatelessWidget {
   const RecentItens({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ItensBloc>(
-      builder: (context, itensBloc, child) {
+    return Consumer2<ItensBloc, ExposicaoStateBloc>(
+      builder: (context, itensBloc, exposicaoBloc, child) {
+        final now = DateTime.now();
+        print('--- Exposições carregadas ---');
+        for (var exp in exposicaoBloc.data) {
+          print('exposicaoId: \'${exp.exposicaoId}\' | data_fim: \'${exp.data_fim?.toDate()}\'');
+        }
+        // Map exposicaoId to data_fim
+        final exposicoesAtivas = <String>{};
+        for (var exp in exposicaoBloc.data) {
+          final isAtiva = exp.exposicaoId != null && (exp.data_fim == null || exp.data_fim!.toDate().isAfter(now));
+          print('exposicaoId: \'${exp.exposicaoId}\' | ativa: $isAtiva');
+          if (isAtiva) {
+            exposicoesAtivas.add(exp.exposicaoId!.trim().toLowerCase());
+          }
+        }
+        print('Exposições ativas:');
+        exposicoesAtivas.forEach(print);
+        final filteredItens = itensBloc.data.where((item) {
+          if (item.exposicaoId == null) return false;
+          final itemId = item.exposicaoId!.trim().toLowerCase();
+          final match = exposicoesAtivas.contains(itemId);
+          print('Obra: ${item.titulo} | exposicaoId: ${item.exposicaoId} | match: $match');
+          return match;
+        }).toList();
+        final isLoading = itensBloc.isLoading;
         return Column(
           children: <Widget>[
             Container(
@@ -21,11 +46,11 @@ class RecentItens extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Text(
-                    'itens_recentes',
+                    'sections.itens_recentes',
                     style: TextStyle(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[900],
+                      fontWeight: FontWeight.w700,
+                      color: Colors.grey[800],
                       wordSpacing: 1,
                       letterSpacing: -0.6,
                     ),
@@ -37,16 +62,35 @@ class RecentItens extends StatelessWidget {
             Container(
               height: 245,
               width: MediaQuery.of(context).size.width,
-              child: ListView.builder(
-                padding: EdgeInsets.only(left: 15, right: 15),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: itensBloc.data.isEmpty ? 3 : itensBloc.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  if (itensBloc.data.isEmpty) return LoadingPopularPlacesCard();
-
-                  final item = itensBloc.data[index];
-                  return _ItemCard(data: item);
+              child: Builder(
+                builder: (_) {
+                  if (isLoading) {
+                    return ListView.builder(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      itemBuilder: (context, index) => LoadingPopularPlacesCard(),
+                    );
+                  } else if (filteredItens.isEmpty) {
+                    return Center(
+                      child: Text(
+                        'Nenhuma obra recente disponível',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: filteredItens.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final item = filteredItens[index];
+                        return _ItemCard(data: item);
+                      },
+                    );
+                  }
                 },
               ),
             )

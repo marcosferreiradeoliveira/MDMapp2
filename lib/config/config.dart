@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Config {
   final String appName = 'App Museu das Mulheres';
@@ -23,10 +23,10 @@ class Config {
   final String specialState2 = 'Chittagong';
 
   //relplace by your country lattitude & longitude
-  final CameraPosition initialCameraPosition = CameraPosition(
-    target: LatLng(23.777176, 90.399452), //here
-    zoom: 10,
-  );
+  // final CameraPosition initialCameraPosition = CameraPosition(
+  //   target: LatLng(23.777176, 90.399452), //here
+  //   zoom: 10,
+  // );
 
   //google maps marker icons
   final String hotelIcon = 'assets/images/hotel.png';

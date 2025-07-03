@@ -24,7 +24,7 @@
    </queries> 
 
    <application
-        android:label="App Museu das Mulheres"
+        android:label="Vetoresvertentes"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

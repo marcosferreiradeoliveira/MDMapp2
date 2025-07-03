@@ -1,13 +1,14 @@
 {
     "home": {
-        "title": "Museu das Mulheres",
+        "title": "DAS",
         "menu": "Menu"
     },
     "menu": {
         "home": "Início",
-        "exhibitions": "Exposições",
-        "news": "Novidades",
-        "tickets": "Ingressos",
+        "exposicoes": "Exposições",
+        "news": "Destaques",
+        "institucional": "Institucional",
+        "curatorial": "Curatorial",
         "schedule": "Programação",
         "about": "Sobre",
         "contact": "Contato",
@@ -15,13 +16,16 @@
     },
     "sections": {
         "novidades": "Novidades",
-        "itens_recentes": "Obras Recentes",
+        "itens_recentes": "Artistas",
         "exposicoes": "Exposições",
         "libras": "Libras",
-        "audiodescrição": "Audiodescrição",
+        "audiodescrição": "Audioguia",
+        "no": "Audiodescrição",
         "obras": "Obras",
-        "click_to_buy_ticket": "Clique para comprar seu ingresso",
-        "tickets": "Ingressos"
+        "click_to_buy_ticket": "Clique para retirar o seu ingresso",
+        "tickets": "Ingressos",
+        "exposicao": "Exposição",
+        "audiodescricao": "Audioguia"
     },
     "common": {
         "no_internet": "Sem conexão com a internet",

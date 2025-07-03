@@ -13,7 +13,6 @@ import 'package:travel_hour/utils/next_screen.dart';
 import 'package:travel_hour/widgets/custom_cache_image.dart';
 import 'package:travel_hour/utils/loading_cards.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:intl/intl.dart';
 
 class ExposicoesPage extends StatefulWidget {
   ExposicoesPage({Key? key}) : super(key: key);
@@ -62,7 +61,7 @@ class _ExposicoesPageState extends State<ExposicoesPage>
       appBar: AppBar(
         centerTitle: false,
         automaticallyImplyLeading: false,
-        title: Text('exposicoes').tr(),
+        title: Text('sections.exposicoes'.tr()),
         elevation: 0,
         actions: <Widget>[
           // IconButton(

@@ -1,0 +1,2 @@
+/Users/marcosferreira/Documents/MDM/MDMapp2/android/app/.cxx/RelWithDebInfo/g35626a6/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/marcosferreira/Documents/MDM/MDMapp2/android/app/.cxx/RelWithDebInfo/g35626a6/arm64-v8a/CMakeFiles/rebuild_cache.dir
